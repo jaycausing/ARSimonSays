@@ -17,8 +17,8 @@ public class SceneController : MonoBehaviour {
 
 	//HelloARController
 	public Camera FirstPersonCamera;
-	public GameObject DetectedPlanePrefab;
-	private List<DetectedPlane> l_AllPlanes = new List<DetectedPlane>();
+	//public GameObject DetectedPlanePrefab;
+	//private List<DetectedPlane> l_AllPlanes = new List<DetectedPlane>();
 	private bool isQuitting = false;
 
 	private void Awake() {
@@ -27,6 +27,10 @@ public class SceneController : MonoBehaviour {
 	private void Start() {
 		Screen.autorotateToPortrait = true;
 		Screen.orientation = ScreenOrientation.AutoRotation;
+
+
+
+		Debug.Log(Session.Status);
 	}
 
 	private void Update() {
@@ -44,18 +48,27 @@ public class SceneController : MonoBehaviour {
 	}
 
 	void QuitOnConnectionErrors(){
-		//if phones not compatible
-		//if permissions not enabled
-		//if cant connect to arcore services
 
-		if(Session.Status == SessionStatus.ErrorPermissionNotGranted){
-			AndroidShowToastMessage();
-			Application.Quit();
-		}
+		/*if(SessionStatus.isError()){
+			SessionStatus status = Session.Status;
 
+			switch (status){
+				case SessionStatus.ErrorPermissionNotGranted:
+					AndroidShowToastMessage();
+					Application.Quit();
+					break;
+				case SessionStatus.ErrorSessionConfigurationNotSupported:
+					AndroidShowToastMessage();
+					Application.Quit();
+					break;
+				default:
+					AndroidShowToastMessage();
+					Application.Quit();
+					break;
+			}
+		}*/
 
-		//call AndroidShowToastMessage() to show errors
-		//Application.Quit()
+		
 	}
 
 	void AndroidShowToastMessage(){
@@ -64,11 +77,11 @@ public class SceneController : MonoBehaviour {
 
 	void UpdateGameLifecycle(){
 		if(Session.Status != SessionStatus.Tracking){
+			Debug.Log("Session not tracking: " + Session.Status);
 			const int LOST_TRACKING_SLEEP_TIMEOUT = 15;
 			Screen.sleepTimeout = LOST_TRACKING_SLEEP_TIMEOUT;
 			return;
 		}
 		Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	}
-
 }

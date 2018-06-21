@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : MonoBehaviour {
+public class Selection : MonoBehaviour {
 
 	protected GameObject btnObj;
 	public Color color;
@@ -16,8 +16,8 @@ public class Button : MonoBehaviour {
 	2. When button is created and enabled in game, spawn button in random area on plane
 	 */
 
-	public Button(GameObject obj, String color){
-		this.name = color + "Button";
+	public Selection(GameObject obj, String color){
+		this.name = color + "Selection";
 		btnObj = obj;
 		//set color
 		//set location on tracked plane
