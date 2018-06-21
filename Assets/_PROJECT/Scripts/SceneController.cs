@@ -6,28 +6,35 @@ using GoogleARCore;
 //taken from HelloARController
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
-    //using Input = InstantPreviewInput;
+    using Input = GoogleARCore.InstantPreviewInput;
 #endif
 
+/*
+Used for coordinating between ARCore and Unity
+ */
 public class SceneController : MonoBehaviour {
 
 	//HelloARController
 	public Camera FirstPersonCamera;
 	public GameObject DetectedPlanePrefab;
-	private List<DetectedPlane> m_AllPlanes = new List<DetectedPlane>();
-	private bool m_IsQuitting = false;
+	private List<DetectedPlane> l_AllPlanes = new List<DetectedPlane>();
+	private bool isQuitting = false;
 
-	private void Start() {
+	private void Awake() {
 		QuitOnConnectionErrors();
+	}
+	private void Start() {
+		Screen.autorotateToPortrait = true;
+		Screen.orientation = ScreenOrientation.AutoRotation;
 	}
 
 	private void Update() {
 		UpdateGameLifecycle();
 
-		Session.GetTrackables<DetectedPlane>(m_AllPlanes);
+		Session.GetTrackables<DetectedPlane>(l_AllPlanes);
 		bool showSearchingUI = true;
-            for (int i = 0; i < m_AllPlanes.Count; i++){
-                if (m_AllPlanes[i].TrackingState == TrackingState.Tracking){
+            for (int i = 0; i < l_AllPlanes.Count; i++){
+                if (l_AllPlanes[i].TrackingState == TrackingState.Tracking){
                     showSearchingUI = false;
                     break;
                 }
@@ -40,7 +47,10 @@ public class SceneController : MonoBehaviour {
 		//if permissions not enabled
 		//if cant connect to arcore services
 
-		//if(Session.Status == SessionStatus.ErrorPermissionNotGranted)
+		if(Session.Status == SessionStatus.ErrorPermissionNotGranted){
+			AndroidShowToastMessage();
+			Application.Quit();
+		}
 
 
 		//call AndroidShowToastMessage() to show errors
