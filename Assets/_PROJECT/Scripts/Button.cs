@@ -6,7 +6,8 @@ public class Button : MonoBehaviour {
 
 	protected GameObject btnObj;
 	public Color color;
-	private boolean isActive;
+	private bool isActive;
+	private bool isDown;
 
 	/*
 	When starting the game
@@ -22,15 +23,15 @@ public class Button : MonoBehaviour {
 	}
 
 	//enabled animation on create
-	void OnEnable();
+	//void OnEnable();
 
 	//disabled animation before destroy
-	void OnDisable();
+	//void OnDisable();
 
-	void setActive(boolean setActive) { this.isActive = setActive; }
+	//void setActive(boolean setActive) { this.isActive = setActive; }
 
-	void getActive() { return isActive; }
+//	void getActive() { return isActive; }
 
-	void selected();
+	//void selected();
 
 }

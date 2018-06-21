@@ -6,7 +6,7 @@ using GoogleARCore;
 //taken from HelloARController
 #if UNITY_EDITOR
     // Set up touch input propagation while using Instant Preview in the editor.
-    using Input = InstantPreviewInput;
+    //using Input = InstantPreviewInput;
 #endif
 
 public class SceneController : MonoBehaviour {
