@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
@@ -31,7 +32,7 @@ public class SceneController : MonoBehaviour {
 	private void Update() {
 		UpdateGameLifecycle();
 
-		Session.GetTrackables<DetectedPlane>(l_AllPlanes);
+		/*Session.GetTrackables<DetectedPlane>(l_AllPlanes);
 		bool showSearchingUI = true;
             for (int i = 0; i < l_AllPlanes.Count; i++){
                 if (l_AllPlanes[i].TrackingState == TrackingState.Tracking){
@@ -39,7 +40,7 @@ public class SceneController : MonoBehaviour {
                     break;
                 }
             }
-            SearchingForPlaneUI.SetActive(showSearchingUI);		
+            SearchingForPlaneUI.SetActive(showSearchingUI);*/		
 	}
 
 	void QuitOnConnectionErrors(){
