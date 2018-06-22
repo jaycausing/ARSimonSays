@@ -11,22 +11,16 @@ public class GameManager : MonoBehaviour {
     - if game starts or ends
     - keeps track of button lists
      */
-     public Button m_startBtn;
-     Button startBtn;
-     
-     void Start(){
-         startBtn = m_startBtn.GetComponent<Button>();
-         startBtn.onClick.AddListener(GameStart);
+
+    public int chances;
+    protected List<GameObject> choices;
+
+     public void StartGame(){
+         //spawn orbs
      }
 
      void Update(){
          
-     }
-
-     public void GameStart(){
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.GetComponent<Renderer>().GetComponent<Renderer>().material.color = Color.red;
-        Destroy(startBtn.gameObject);
      }
      
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 //taken from HelloARController
 #if UNITY_EDITOR
-    // Set up touch input propagation while using Instant Preview in the editor.
-    using Input = GoogleARCore.InstantPreviewInput;
+// Set up touch input propagation while using Instant Preview in the editor.
+using Input = GoogleARCore.InstantPreviewInput;
 #endif
 
 
@@ -21,7 +19,7 @@ public class SceneController : MonoBehaviour {
 	private bool isQuitting = false;
 
 	private void Awake() {
-		QuitOnConnectionErrors();
+		_QuitOnConnectionErrors();
 	}
 	private void Start() {
 		Screen.autorotateToPortrait = true;
@@ -29,14 +27,32 @@ public class SceneController : MonoBehaviour {
 
 	}
 
+	/*
+		Remember that the app is tracking for planes every Update() call
+	 */
 	private void Update() {
-		UpdateGameLifecycle();
+		_UpdateGameLifecycle();
 
-		Session.GetTrackables<DetectedPlane>(l_Planes);
-		Debug.Log(Session.Status);
+		if(Session.Status == SessionStatus.NotTracking){
+			Debug.Log("Not tracking");
+			return;
+		} else {
+			Debug.Log("Tracking");
+		}
+		
+
+		Session.GetTrackables<DetectedPlane>(l_Planes, TrackableQueryFilter.New);
 		bool showSearchingUI = true;
         for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
+				//instantiate plane viz
+
+				GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				plane.transform.position = l_Planes[i].CenterPose.position;
+
+				//GameObject plane = Instantiate(, Vector3.zero,
+				//Quaternion.identity, transform);
+				//plane.GetComponent<DetectedPlaneVizualizer>().Initialize(l_Planes[i]);
                 showSearchingUI = false;
                 break;
             }
@@ -44,30 +60,29 @@ public class SceneController : MonoBehaviour {
         searchingText.SetActive(showSearchingUI);
 
 		Touch touch;
+
+		//if no touch, update is done
 		if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) {
             return;
         }
 
+		//else update if plane
 		TrackableHit hit;
         TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
         TrackableHitFlags.FeaturePointWithSurfaceNormal;
 
 		if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
-			if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
-                // Use hit pose and camera pose to check if hittest is from the
-                // back of the plane, if it is, no need to create the anchor.
-                if ((hit.Trackable is DetectedPlane) &&
-                    Vector3.Dot(FirstPersonCamera.transform.position - hit.Pose.position,
-					hit.Pose.rotation * Vector3.up) < 0){
-                    	Debug.Log("Hit at back of the current DetectedPlane");
-                }
+            // Use hit pose and camera pose to check if hittest is from the
+            // back of the plane, if it is, no need to create the anchor.
+            if (hit.Trackable is DetectedPlane){
+				Debug.Log("Plane is detected and tracking!");
+				
 			}
 		}
-
-
 	}
 
-	void QuitOnConnectionErrors(){
+
+	void _QuitOnConnectionErrors(){
 
 		if(SessionStatusExtensions.IsError(Session.Status)){
 			SessionStatus status = Session.Status;
@@ -95,7 +110,7 @@ public class SceneController : MonoBehaviour {
 		//toast errors
 	}
 
-	void UpdateGameLifecycle(){
+	void _UpdateGameLifecycle(){
 		if(Session.Status != SessionStatus.Tracking){
 			const int LOST_TRACKING_SLEEP_TIMEOUT = 15;
 			Screen.sleepTimeout = LOST_TRACKING_SLEEP_TIMEOUT;
