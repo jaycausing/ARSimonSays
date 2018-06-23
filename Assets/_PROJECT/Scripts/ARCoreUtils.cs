@@ -18,6 +18,8 @@ public class ARCoreUtils : MonoBehaviour {
 	// ARCore Session UI GameObject
 	public GameObject sessionUI;
 
+	//FIXME: take care of subsuming DetectedPlane objects
+	//FIXME: why isnt plane tracking on my desk or floor
 	public void TrackPlanes(List<DetectedPlane> l_Planes){
 		Session.GetTrackables<DetectedPlane>(l_Planes, TrackableQueryFilter.New);
 		bool showSearchingUI = true;
@@ -26,7 +28,8 @@ public class ARCoreUtils : MonoBehaviour {
 
 				Anchor planeAnchor = l_Planes[i].CreateAnchor(l_Planes[i].CenterPose);
 				//instantiate plane viz
-				GameObject planeObj = Instantiate(trackingPlane, planeAnchor.transform);
+				GameObject orb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				Instantiate(orb, planeAnchor.transform);
 				
                 showSearchingUI = false;
                 break;
