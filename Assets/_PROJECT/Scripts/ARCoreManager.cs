@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+	using Input = GoogleARCore.InstantPreviewInput;
+#endif
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;

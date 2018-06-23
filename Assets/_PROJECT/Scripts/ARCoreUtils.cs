@@ -23,9 +23,10 @@ public class ARCoreUtils : MonoBehaviour {
 		bool showSearchingUI = true;
         for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
+
+				Anchor planeAnchor = l_Planes[i].CreateAnchor(l_Planes[i].CenterPose);
 				//instantiate plane viz
-				GameObject planeObj = Instantiate(trackingPlane, Vector3.zero,
-				Quaternion.identity, transform);
+				GameObject planeObj = Instantiate(trackingPlane, planeAnchor.transform);
 				
                 showSearchingUI = false;
                 break;
