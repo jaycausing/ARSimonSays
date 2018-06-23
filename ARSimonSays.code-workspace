@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Project Scripts",
+			"path": "Assets/_PROJECT/Scripts/"
+		},
+		{
+			"name": "ARCore Example Projects",
+			"path": "Assets/GoogleARCore/Examples/"
+		}
+	],
+	"settings": {}
+}
