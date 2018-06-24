@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
+using GoogleARCore.Examples.Common;
 
 /*
 * Custom library for handling core ARCore functionality
@@ -18,6 +19,10 @@ public class ARCoreUtils : MonoBehaviour {
 	// ARCore Session UI GameObject
 	public GameObject sessionUI;
 
+	// if true, will create multiple active planes
+	// else only track first active plane
+	//public bool isMultipleActivePlanes;
+
 	//FIXME: take care of subsuming DetectedPlane objects
 	//FIXME: why isnt plane tracking on my desk or floor
 	public void TrackPlanes(List<DetectedPlane> l_Planes){
@@ -26,10 +31,17 @@ public class ARCoreUtils : MonoBehaviour {
         for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
 
-				Anchor planeAnchor = l_Planes[i].CreateAnchor(l_Planes[i].CenterPose);
+				/*Anchor planeAnchor = l_Planes[i].CreateAnchor(l_Planes[i].CenterPose);
 				//instantiate plane viz
 				GameObject orb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-				Instantiate(orb, planeAnchor.transform);
+				Instantiate(orb, planeAnchor.transform);*/
+
+				// Gonna try to use DetectedPlaneVisualizer
+
+				Debug.Log("Instantiate plane");
+				GameObject activePlane = Instantiate(trackingPlane, l_Planes[i].CenterPose.position,
+				Quaternion.identity, transform);
+				activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_Planes[i]);
 				
                 showSearchingUI = false;
                 break;
