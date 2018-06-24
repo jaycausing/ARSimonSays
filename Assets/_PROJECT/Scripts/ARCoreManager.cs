@@ -13,7 +13,20 @@ public class ARCoreManager : MonoBehaviour {
 
 	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
 
-	// Use this for initialization
+	// Start tracking for planes
+	private bool isTracking = false;
+
+	private GameObject SceneUI;
+	private GameObject GameUI;
+
+	void Awake() {
+		SceneUI = GameObject.FindWithTag("SceneUI");
+		GameUI = GameObject.FindWithTag("GameUI");
+
+		SceneUI.SetActive(false);
+		GameUI.SetActive(true);
+	}
+	
 	void Start () {
 		utils.QuitOnConnectionError();
 	}
@@ -44,5 +57,13 @@ public class ARCoreManager : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public void startTracking(){
+		isTracking = true;
+	}
+
+	public void stopTracking(){
+		isTracking = false;
 	}
 }
