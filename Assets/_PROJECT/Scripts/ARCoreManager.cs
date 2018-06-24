@@ -9,35 +9,39 @@ using GoogleARCore;
 
 public class ARCoreManager : MonoBehaviour {
 
-	public ARCoreUtils utils;
-
-	// Start tracking for planes
-	private bool isTracking = false;
+	public ARCoreUtils Utils;
+	public GameManager GameManager;
 
 	private GameObject SceneUI;
 	private GameObject GameUI;
+
+	private bool isAppStarted;
 
 	void Awake() {
 		SceneUI = GameObject.FindWithTag("SceneUI");
 		GameUI = GameObject.FindWithTag("GameUI");
 
-		SceneUI.SetActive(false);
-		//GameUI.SetActive(true);
+		setSceneUI(true);
+		setGameUI(false);
+
+		isAppStarted = false;
 	}
 	
 	void Start () {
-		utils.QuitOnConnectionError();
+		Utils.QuitOnConnectionError();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		utils.UpdateAppLifecycle();
+		Utils.UpdateAppLifecycle();
 
 		if(Session.Status == SessionStatus.NotTracking){
 			Debug.Log("Not tracking");
 			return;
 		} else {
-			utils.TrackPlanes();
+			//TODO: when player presses start button, then start tracking
+			if(isAppStarted)
+				Utils.TrackPlanes();
 		}
 
 		Touch touch;
@@ -57,11 +61,16 @@ public class ARCoreManager : MonoBehaviour {
 
 	}
 
-	public void startTracking(){
-		isTracking = true;
+	void StartTrackingOnClick(){
+		setSceneUI(false);
+		setGameUI(true);
+
+		isAppStarted = true;
 	}
 
-	public void stopTracking(){
-		isTracking = false;
-	}
+	public void setSceneUI(bool setScene) { SceneUI.SetActive(setScene); }
+	public void setGameUI(bool setGame) { GameUI.SetActive(setGame); }
+
+
+
 }

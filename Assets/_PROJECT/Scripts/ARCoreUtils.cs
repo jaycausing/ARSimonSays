@@ -14,12 +14,18 @@ using GoogleARCore.Examples.Common;
  */
 public class ARCoreUtils : MonoBehaviour {
 
+	public ARCoreManager manager;
+	
 	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
 
-	GameObject GameUI;
+	// Start tracking for planes
+	private bool isTracking = false;
 	
 	// Tracking Plane prefab
 	public GameObject trackingPlane;
+	bool showSearchingUI;
+
+	GameObject activePlane;
 
 	// if true, will create multiple active planes
 	// else only track first active plane
@@ -29,12 +35,11 @@ public class ARCoreUtils : MonoBehaviour {
 	//FIXME: why isnt plane tracking on my desk or floor
 
 	public void Awake() {
-		GameUI = GameObject.FindWithTag("GameUI");
+		showSearchingUI = true;
 	}
 	public void TrackPlanes(){
 
 		Session.GetTrackables<DetectedPlane>(l_Planes, TrackableQueryFilter.New);
-		bool showSearchingUI = true;
         for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
 				
@@ -45,15 +50,18 @@ public class ARCoreUtils : MonoBehaviour {
 
 				// Gonna try to use DetectedPlaneVisualizer
 
-				GameObject activePlane = Instantiate(trackingPlane, l_Planes[i].CenterPose.position,
-				Quaternion.identity, transform);
+				activePlane = Instantiate(trackingPlane, l_Planes[i].CenterPose.position,
+				Quaternion.identity);
 				Debug.Log("Instantiated plane");
 
 				activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_Planes[i]);
 				
+				//TODO: see if game will still work when tracking another plane
+				isTracking = true;
                 showSearchingUI = false;
+				break;
             }
-			GameUI.SetActive(showSearchingUI);
+			manager.setGameUI(showSearchingUI);
 		}
 	}
 
