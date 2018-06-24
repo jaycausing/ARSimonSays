@@ -14,10 +14,12 @@ using GoogleARCore.Examples.Common;
  */
 public class ARCoreUtils : MonoBehaviour {
 
+	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
+
+	GameObject GameUI;
+	
 	// Tracking Plane prefab
 	public GameObject trackingPlane;
-	// ARCore Session UI GameObject
-	public GameObject sessionUI;
 
 	// if true, will create multiple active planes
 	// else only track first active plane
@@ -25,12 +27,17 @@ public class ARCoreUtils : MonoBehaviour {
 
 	//FIXME: take care of subsuming DetectedPlane objects
 	//FIXME: why isnt plane tracking on my desk or floor
-	public void TrackPlanes(List<DetectedPlane> l_Planes){
+
+	public void Awake() {
+		GameUI = GameObject.FindWithTag("GameUI");
+	}
+	public void TrackPlanes(){
+
 		Session.GetTrackables<DetectedPlane>(l_Planes, TrackableQueryFilter.New);
 		bool showSearchingUI = true;
         for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
-
+				
 				/*Anchor planeAnchor = l_Planes[i].CreateAnchor(l_Planes[i].CenterPose);
 				//instantiate plane viz
 				GameObject orb = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -38,15 +45,15 @@ public class ARCoreUtils : MonoBehaviour {
 
 				// Gonna try to use DetectedPlaneVisualizer
 
-				Debug.Log("Instantiate plane");
 				GameObject activePlane = Instantiate(trackingPlane, l_Planes[i].CenterPose.position,
 				Quaternion.identity, transform);
+				Debug.Log("Instantiated plane");
+
 				activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_Planes[i]);
 				
                 showSearchingUI = false;
-                break;
             }
-			//TODO: remove searching text on track planes
+			GameUI.SetActive(showSearchingUI);
 		}
 	}
 

@@ -11,8 +11,6 @@ public class ARCoreManager : MonoBehaviour {
 
 	public ARCoreUtils utils;
 
-	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
-
 	// Start tracking for planes
 	private bool isTracking = false;
 
@@ -24,7 +22,7 @@ public class ARCoreManager : MonoBehaviour {
 		GameUI = GameObject.FindWithTag("GameUI");
 
 		SceneUI.SetActive(false);
-		GameUI.SetActive(true);
+		//GameUI.SetActive(true);
 	}
 	
 	void Start () {
@@ -39,7 +37,7 @@ public class ARCoreManager : MonoBehaviour {
 			Debug.Log("Not tracking");
 			return;
 		} else {
-			utils.TrackPlanes(l_Planes);
+			utils.TrackPlanes();
 		}
 
 		Touch touch;
