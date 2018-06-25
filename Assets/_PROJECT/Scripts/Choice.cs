@@ -1,6 +1,4 @@
-﻿namespace Choices
-{
-	using System.Collections;
+﻿	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 	using GoogleARCore;
@@ -10,8 +8,23 @@
 
 	public abstract class Choice {
 
+		int choiceNum;
+		Color choiceColor;
+		GameObject choicePrefab;
+		Trackable trackable;
+		bool isActiveToPlayer;
+
+        public Choice(){}
+		public Choice(int i, Color c, GameObject p, Trackable t){
+			choiceNum = i;
+			choiceColor = c;
+			choicePrefab = p;
+			trackable = t;
+			isActiveToPlayer = false;
+		}
+
         public abstract void selectChoice();
-		public abstract void setActive();
+		public abstract void setPlayerActive();
 
 	}
 
@@ -21,17 +34,22 @@
 		Color choiceColor;
 		GameObject choicePrefab;
 		Trackable trackable;
-        protected RedChoice(int i, Color c, GameObject p, Trackable t) {
+		bool isActiveToPlayer;
+
+        public RedChoice(int i, Color c, GameObject p, Trackable t) {
 			choiceNum = i;
 			choiceColor = c;
 			choicePrefab = p;
 			trackable = t;
+			isActiveToPlayer = false;
         }
 
         public override void selectChoice() {
+			// TODO: add this object to the list of choices
         }
 
-        public override void setActive() {
+		// sets if choice is active to the player
+        public override void setPlayerActive() {
+			isActiveToPlayer = true;
         }
     }
-}

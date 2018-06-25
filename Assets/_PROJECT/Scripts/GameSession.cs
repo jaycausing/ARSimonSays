@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameSession : MonoBehaviour {
 
-	private static GameSession session = null;
-	private static bool isSessionActive;
-
-
+	// current session reference
+	private static GameSession session;
+	private static int roundNum;
+	private Round round;
+	private List<Choice> availableChoices;
 
 	//Simon and Player's turn
 	
@@ -18,7 +19,7 @@ public class GameSession : MonoBehaviour {
 	//Player chances
 
 	public GameSession(){
-		session = new GameSession();
+		roundNum = 0;
 	}
 
 	public bool isGameStarted() {
@@ -27,7 +28,21 @@ public class GameSession : MonoBehaviour {
 		return false;
 	}
 
-	private void Update() {
+	// used to create Round instances
+	public void StartRound() {
 		
+	}
+	
+	// used to end Round instances before starting a new one
+	public void NextRound() {
+
+	}
+
+	public void RestartRound() {
+		
+	}
+
+	public void StartGame() {
+		session = new GameSession();
 	}
 }

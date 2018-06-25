@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33971111075108318}
   - component: {fileID: 23447589774393766}
   - component: {fileID: 64750520508867522}
+  - component: {fileID: 114334785615271110}
   m_Layer: 0
   m_Name: TrackingPlane
   m_TagString: Untagged
@@ -98,3 +99,14 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114334785615271110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1333906220489230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e3f20de6c2e405a93736a38f74b0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
