@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoogleARCore;
+using GoogleARCore.Examples.Common;
 
 public class GameManager : MonoBehaviour {
     /*
@@ -9,20 +11,35 @@ public class GameManager : MonoBehaviour {
     - allocating data between Player/Simon and session
     - player score
      */
+    
+    //ITS CAUSE THIS NEVER BECAME A THING
+    public static GameSession activeSession = null;
+    public GameObject SessionPrefab;
+    bool isGameStarted;
+    public static DetectedPlane activePlane;
+    
+    void Awake(){
+        isGameStarted = false;
+    }
+    void Update() {
+        if(ActivePlaneGenerator.GetActivePlaneStatus() == true &&
+        activeSession == null){
+           GameStart(ActivePlaneGenerator.GetActivePlane());
+        }
+    }
 
-    GameSession session;
-     
-     public void GameStart(){
-         session = Instantiate(new GameSession());
-     }
+    public void GameStart(DetectedPlane dp){
+        activePlane = dp;
+        activeSession = Instantiate(SessionPrefab).GetComponent<GameSession>();
+    }
 
-     public void GameEnd(){
-         Destroy(session);
-     }
+    public void GameEnd(){
+         Destroy(activeSession);
+    }
 
-     public void GameRestart(){
+    public void GameRestart(){
          GameEnd();
-         GameStart();
-     }
+         GameStart(activePlane);
+    }
      
 }

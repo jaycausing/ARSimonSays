@@ -14,6 +14,8 @@ public class ActivePlane : MonoBehaviour {
 
 	private DetectedPlane dPlane;
 
+	private List<Vector3> l_PreviousFrameMeshVertices = new List<Vector3>();
+	private List<Vector3> l_MeshVertices = new List<Vector3>();
 	
 
 	// Use this for initialization

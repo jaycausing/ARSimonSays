@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 1084481456}
   - component: {fileID: 1084481458}
   - component: {fileID: 1084481457}
+  - component: {fileID: 1084481459}
   m_Layer: 0
   m_Name: ARCoreManager
   m_TagString: Untagged
@@ -259,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 1084481458}
+  gamemanager: {fileID: 1348307864}
   trackingPlane: {fileID: 1333906220489230, guid: 2eeac12c9fd4ea544acc561016587ecd,
     type: 2}
 --- !u!114 &1084481458
@@ -272,8 +274,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f355984d13b9b24e8ebfb76b8e52f8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Utils: {fileID: 0}
-  GameManager: {fileID: 0}
+  Utils: {fileID: 1084481457}
+  GameManager: {fileID: 1348307864}
+  ARCoreDevice: {fileID: 1229447243}
+  FindingMode: 0
+--- !u!114 &1084481459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1084481455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50060783c23aaf74ea5de5a7925daa5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackingPlanePrefab: {fileID: 1333906220489230, guid: 2eeac12c9fd4ea544acc561016587ecd,
+    type: 2}
 --- !u!1001 &1128444924
 Prefab:
   m_ObjectHideFlags: 0
@@ -344,10 +361,30 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1719940163708908, guid: 826d5828c1558804d82bd1aeee3a1634, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1998475548194788, guid: 826d5828c1558804d82bd1aeee3a1634, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114317687155338726, guid: 826d5828c1558804d82bd1aeee3a1634,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1084481458}
+    - target: {fileID: 114317687155338726, guid: 826d5828c1558804d82bd1aeee3a1634,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartGameOnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114317687155338726, guid: 826d5828c1558804d82bd1aeee3a1634,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114317687155338726, guid: 826d5828c1558804d82bd1aeee3a1634,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -358,6 +395,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224797565488903450, guid: 826d5828c1558804d82bd1aeee3a1634,
     type: 2}
   m_PrefabInternal: {fileID: 1128444924}
+--- !u!1 &1229447243 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1772147192650458, guid: c10877f7cd5764de18d46d7b777d1faa,
+    type: 2}
+  m_PrefabInternal: {fileID: 1661125732}
 --- !u!1 &1348307862
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1470167229
 RectTransform:
   m_ObjectHideFlags: 0

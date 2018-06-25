@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using GoogleARCore;
 
 public class ARCoreManager : MonoBehaviour {
@@ -12,10 +13,14 @@ public class ARCoreManager : MonoBehaviour {
 	public ARCoreUtils Utils;
 	public GameManager GameManager;
 
+	public GameObject ARCoreDevice;
+
 	private GameObject SceneUI;
 	private GameObject GameUI;
 
-	private bool isAppStarted;
+
+	// holds planes app is currently tracking that frame
+	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
 
 	void Awake() {
 		SceneUI = GameObject.FindWithTag("SceneUI");
@@ -23,8 +28,6 @@ public class ARCoreManager : MonoBehaviour {
 
 		setSceneUI(true);
 		setGameUI(false);
-
-		isAppStarted = false;
 	}
 	
 	void Start () {
@@ -35,15 +38,16 @@ public class ARCoreManager : MonoBehaviour {
 	void Update () {
 		Utils.UpdateAppLifecycle();
 
-		if(Session.Status == SessionStatus.NotTracking){
-			Debug.Log("Not tracking");
+		if(Session.Status == SessionStatus.NotTracking)
 			return;
-		} else {
-			//TODO: when player presses start button, then start tracking
-			if(isAppStarted)
-				Utils.TrackPlanes();
-		}
 
+		Session.GetTrackables<DetectedPlane>(l_Planes);
+		for (int i = 0; i < l_Planes.Count; i++){
+            if (l_Planes[i].TrackingState == TrackingState.Tracking){
+				setGameUI(false);
+			}
+		}
+		
 		Touch touch;
 
 		if(Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -56,16 +60,16 @@ public class ARCoreManager : MonoBehaviour {
 		if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
 			if (hit.Trackable is DetectedPlane){
 				Debug.Log("Plane is detected and tracking!");
+				Debug.Log("Touch position: " + hit.Pose.position);
+				Debug.Log("Distance from player: " + hit.Distance);
 			}
 		}
 
 	}
 
-	void StartTrackingOnClick(){
+	public void StartGameOnClick(){
 		setSceneUI(false);
 		setGameUI(true);
-
-		isAppStarted = true;
 	}
 
 	public void setSceneUI(bool setScene) { SceneUI.SetActive(setScene); }
