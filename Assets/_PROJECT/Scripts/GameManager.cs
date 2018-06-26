@@ -17,19 +17,38 @@ public class GameManager : MonoBehaviour {
     public GameObject SessionPrefab;
     bool isGameStarted;
     public static DetectedPlane activePlane;
+    public static TrackableHit spawnHit;
     
     void Awake(){
         isGameStarted = false;
     }
     void Update() {
-        if(ActivePlaneGenerator.GetActivePlaneStatus() == true &&
+        /*if(ActivePlaneGenerator.GetActivePlaneStatus() &&
         activeSession == null){
-           GameStart(ActivePlaneGenerator.GetActivePlane());
-        }
+            Touch touch;
+
+            if(Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+			    return;
+            
+            touch = Input.GetTouch(0);
+
+            Debug.Log("Touching");
+
+            TrackableHit hit;
+            TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+		    TrackableHitFlags.FeaturePointWithSurfaceNormal;
+
+            if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
+                if (hit.Trackable is DetectedPlane){
+                    GameStart(ActivePlaneGenerator.GetActivePlane(), hit.Pose);
+                }
+            }
+        }*/
     }
 
-    public void GameStart(DetectedPlane dp){
+    public void GameStart(DetectedPlane dp, TrackableHit h){
         activePlane = dp;
+        spawnHit = h;
         activeSession = Instantiate(SessionPrefab).GetComponent<GameSession>();
     }
 
@@ -39,7 +58,7 @@ public class GameManager : MonoBehaviour {
 
     public void GameRestart(){
          GameEnd();
-         GameStart(activePlane);
+         GameStart(activePlane, spawnHit);
     }
      
 }

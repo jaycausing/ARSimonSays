@@ -12,7 +12,6 @@ public class ARCoreManager : MonoBehaviour {
 
 	public ARCoreUtils Utils;
 	public GameManager GameManager;
-
 	public GameObject ARCoreDevice;
 
 	private GameObject SceneUI;
@@ -58,10 +57,8 @@ public class ARCoreManager : MonoBehaviour {
 		TrackableHitFlags.FeaturePointWithSurfaceNormal;
 		
 		if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
-			if (hit.Trackable is DetectedPlane){
-				Debug.Log("Plane is detected and tracking!");
-				Debug.Log("Touch position: " + hit.Pose.position);
-				Debug.Log("Distance from player: " + hit.Distance);
+			if (hit.Trackable is DetectedPlane && GameManager.activeSession == null){
+				GameManager.GameStart(ActivePlaneGenerator.GetActivePlane(), hit);
 			}
 		}
 

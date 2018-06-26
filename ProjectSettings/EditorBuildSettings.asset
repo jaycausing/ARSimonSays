@@ -8,10 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_PROJECT/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/GoogleARCore/Examples/HelloAR/Scenes/HelloAR.unity
     guid: e6a6fa04348cb45c9b0221eb19c946da
   - enabled: 0
     path: Assets/_PROJECT/Scenes/PointCloudTest.unity
     guid: c4bada1ccd6d1cc459cfeea2cc84cd95
+  - enabled: 1
+    path: Assets/_PROJECT/Scenes/TrackingTest.unity
+    guid: ac077899a55924544b11b7aed012587b
   m_configObjects: {}
