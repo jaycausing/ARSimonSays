@@ -9,12 +9,14 @@ using GoogleARCore;
 public class RedChoice : Choice {
 
 	int choiceNum;
-	Color choiceColor;
 	bool isActiveToPlayer;
 
     void Awake() {
-		choiceColor = Color.red;
 		isActiveToPlayer = false;
+    }
+
+    void Update(){
+        this.transform.Rotate(Vector3.up, Time.deltaTime * 20.0f);
     }
 
     public override void setChoiceNum(int i) {
@@ -33,7 +35,7 @@ public class RedChoice : Choice {
 
     public override void glow()
     {
-        choiceColor = Color.white;
-        choiceColor = Color.red;
+        //choiceColor = Color.white;
+        //choiceColor = Color.red;
     }
 }

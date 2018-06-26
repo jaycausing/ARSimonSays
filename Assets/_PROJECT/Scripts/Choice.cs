@@ -9,10 +9,9 @@ using Input = GoogleARCore.InstantPreviewInput;
 public abstract class Choice : MonoBehaviour {
 
 	int choiceNum;
-	Color choiceColor;
 	bool isActiveToPlayer;
-	void Awake(){
-	}
+	void Awake(){}
+	void Update(){}
 
     public abstract void setChoiceNum(int i);
 	public abstract void enableChoice();
