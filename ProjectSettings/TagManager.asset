@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SceneUI
   - GameUI
+  - Choice
   layers:
   - Default
   - TransparentFX

@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
 
     public void GameStart(DetectedPlane dp){
         activePlane = dp;
-        activeSession = Instantiate(SessionPrefab).GetComponent<GameSession>();
+        activeSession = Instantiate(SessionPrefab, transform).GetComponent<GameSession>();
     }
 
     public void GameEnd(){
