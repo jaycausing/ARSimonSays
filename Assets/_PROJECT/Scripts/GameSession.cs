@@ -46,16 +46,6 @@ public class GameSession : MonoBehaviour {
 		playArea = GameManager.activePlane;
 		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
 		player = GameObject.FindWithTag("Player");
-		/*availableChoices = new GameObject[5];
-
-		for(int i = 0; i < choiceColors.Length; i++){
-			string objName = "choice" + i;
-			availableChoices[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-			availableChoices[i].name = objName;
-			//availableChoices[i].AddComponent
-			availableChoices[i].GetComponent<Renderer>().material.color = choiceColors[i];
-		}
-		*/
 
 		session = this;
 	}
@@ -67,8 +57,9 @@ public class GameSession : MonoBehaviour {
 			pos.z = 1.0f;
 			pos.y = distance;*/
 			Instantiate(availableChoices[i], spawnPositions[i], Quaternion.identity, playAreaAnchor.transform);
-			//choice.transform.LookAt(player.transform);
-			//distance += 0.5f;
+			Renderer r = availableChoices[i].GetComponentInChildren<Renderer>(true);
+			r.material.color = choiceColors[i];
+			// TODO: need to make custom materials for all choices
 		}
 
 		StartRound();
