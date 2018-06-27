@@ -20,7 +20,7 @@ public class GameSession : MonoBehaviour {
 	private Color[] choiceColors = new Color[] { 
 	Color.red, Color.yellow, Color.green, 
 	Color.blue, Color.magenta };
-	private Choice[] choiceComps = new Choice[]{};
+	private Choice[] choiceComponents;
 
 	public GameObject player;
 	//Simon and Player's turn
@@ -37,6 +37,7 @@ public class GameSession : MonoBehaviour {
 		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
 		player = GameObject.FindWithTag("Player");
 		availableChoices = new GameObject[5];
+
 		for(int i = 0; i < choiceColors.Length; i++){
 			string objName = "choice" + i;
 			availableChoices[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -44,6 +45,7 @@ public class GameSession : MonoBehaviour {
 			//availableChoices[i].AddComponent
 			availableChoices[i].GetComponent<Renderer>().material.color = choiceColors[i];
 		}
+		
 		session = this;
 	}
 
