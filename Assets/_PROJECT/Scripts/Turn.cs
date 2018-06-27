@@ -19,6 +19,9 @@ public abstract class Turn : MonoBehaviour {
 	public abstract List<Choice> SelectChoices();
 	public abstract void PlaybackChoices();
 
+	// TODO:
+	// if player loses, this.BroadcastMessage("GameEnd");
+
 }
 
 public class SimonTurn : Turn
@@ -32,6 +35,7 @@ public class SimonTurn : Turn
 	int currentRound;
     public SimonTurn(List<Choice> choiceHistory, int round)
     {
+		choiceOptions = 
 		currentChoices = new List<Choice>();
 		pastChoices = choiceHistory;
 		currentRound = round;

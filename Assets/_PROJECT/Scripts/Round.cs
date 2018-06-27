@@ -6,7 +6,7 @@ public class Round : MonoBehaviour {
  
 	private static Round currentRound;
 	
-	public Round(){
+	void Awake(){
 
 	}
 	void Start () {

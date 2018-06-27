@@ -11,15 +11,14 @@
 		int choiceNum;
 		Color choiceColor;
 		GameObject choicePrefab;
-		Trackable trackable;
 		bool isActiveToPlayer;
 
-        public Choice(){}
-		public Choice(int i, Color c, GameObject p, Trackable t){
+		public Choice(){}
+
+		public Choice(int i, Color c, GameObject p){
 			choiceNum = i;
 			choiceColor = c;
 			choicePrefab = p;
-			trackable = t;
 			isActiveToPlayer = false;
 		}
 
@@ -33,14 +32,12 @@
 		int choiceNum;
 		Color choiceColor;
 		GameObject choicePrefab;
-		Trackable trackable;
 		bool isActiveToPlayer;
 
-        public RedChoice(int i, Color c, GameObject p, Trackable t) {
+        public RedChoice(int i, Color c, GameObject p) {
 			choiceNum = i;
 			choiceColor = c;
 			choicePrefab = p;
-			trackable = t;
 			isActiveToPlayer = false;
         }
 

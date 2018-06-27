@@ -12,7 +12,15 @@ public class GameSession : MonoBehaviour {
 	private Anchor playAreaAnchor;
 	private static int roundNum;
 	private Round round;
-	private List<Choice> availableChoices;
+	
+	//TODO: remember to replace prototype
+	// list with actual list
+	//private List<Choice> availableChoices;
+	private GameObject[] availableChoices;
+	private Color[] choiceColors = new Color[] { 
+	Color.red, Color.yellow, Color.green, 
+	Color.blue, Color.magenta };
+	private Choice[] choiceComps = new Choice[]{};
 
 	public GameObject player;
 	//Simon and Player's turn
@@ -28,6 +36,14 @@ public class GameSession : MonoBehaviour {
 		playArea = GameManager.activePlane;
 		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
 		player = GameObject.FindWithTag("Player");
+		availableChoices = new GameObject[5];
+		for(int i = 0; i < choiceColors.Length; i++){
+			string objName = "choice" + i;
+			availableChoices[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			availableChoices[i].name = objName;
+			//availableChoices[i].AddComponent
+			availableChoices[i].GetComponent<Renderer>().material.color = choiceColors[i];
+		}
 		session = this;
 	}
 
