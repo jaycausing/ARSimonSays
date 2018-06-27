@@ -16,19 +16,22 @@ public class GameSession : MonoBehaviour {
 	//TODO: remember to replace prototype
 	// list with actual list
 	//private List<Choice> availableChoices;
-	private GameObject[] availableChoices;
+	public GameObject[] availableChoices;
 	private Color[] choiceColors = new Color[] { 
 	Color.red, Color.yellow, Color.green, 
 	Color.blue, Color.magenta };
-	private Choice[] choiceComponents;
-
-	public GameObject player;
-	//Simon and Player's turn
 	
+	private GameObject player;
+	
+	//Simon and Player's turn
+	Turn playerTurn;
+	Turn simonTurn;
+
 	//Simon and Player lists
 	
-	//Player points
-
+	
+	//Player points = round completed
+	protected int points;
 	//Player chances
 
 	void Awake(){
@@ -36,7 +39,7 @@ public class GameSession : MonoBehaviour {
 		playArea = GameManager.activePlane;
 		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
 		player = GameObject.FindWithTag("Player");
-		availableChoices = new GameObject[5];
+		/*availableChoices = new GameObject[5];
 
 		for(int i = 0; i < choiceColors.Length; i++){
 			string objName = "choice" + i;
@@ -45,7 +48,13 @@ public class GameSession : MonoBehaviour {
 			//availableChoices[i].AddComponent
 			availableChoices[i].GetComponent<Renderer>().material.color = choiceColors[i];
 		}
-		
+		*/
+
+		float distance = 1.0f;
+		foreach(GameObject choice in availableChoices){
+			Instantiate(choice, new Vector3(distance,0,0), Quaternion.identity);
+			distance++;
+		}
 		session = this;
 	}
 
