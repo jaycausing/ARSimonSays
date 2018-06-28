@@ -75,12 +75,6 @@ public class PlayerTurn : Turn
         throw new System.NotImplementedException();
     }
 
-    public override void StartTurn(List<GameObject> choiceHistory)
-    {
-        Debug.Log("App tried calling wrong StartTurn()");
-        throw new System.NotImplementedException();
-    }
-
     public override List<GameObject> SelectChoices()
     {
         Debug.Log("App tried calling the wrong SelectChoices()");

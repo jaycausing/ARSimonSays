@@ -63,7 +63,7 @@ public class GameSession : MonoBehaviour {
 
 	// used to create Round instances
 	public void StartRound() {
-		roundObj = Instantiate((new GameObject("Round " + RoundNum)), transform);
+		roundObj = Instantiate((new GameObject("Round " + RoundNum)), this.transform);
 		round = roundObj.AddComponent<Round>() as Round;
 		//Instantiate(new Round(), transform);
 		Debug.Log("Round " + RoundNum + " start");

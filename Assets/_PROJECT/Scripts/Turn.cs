@@ -13,7 +13,6 @@ public abstract class Turn : MonoBehaviour {
 
 	public abstract void EndTurn();
 	public abstract void StartTurn();
-	public abstract void StartTurn(List<GameObject> choiceHistory);
 	public abstract void RestartTurn();
 
 	public abstract List<GameObject> SelectChoices();

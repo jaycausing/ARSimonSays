@@ -58,8 +58,8 @@ public class SimonTurn : Turn
 
     public override List<GameObject> SelectChoices()
     {
+		Debug.Log("Choosing objects...");
         if(currentRound == 0){
-			//TODO: Select three Choice objects at random
 			for(int i = 0; i < 3; i++){
 				currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
 			}
@@ -74,16 +74,9 @@ public class SimonTurn : Turn
 		return choice;
 	}
 
-    public override void StartTurn(List<GameObject> choiceHistory)
-    {
-		//turnActive = true;
-		PlaybackChoices(SelectChoices());
-    }
-
     public override void StartTurn()
     {
-		Debug.Log("App tried calling wrong StartTurn()");
-        throw new System.NotImplementedException();
+		PlaybackChoices(SelectChoices());
     }
 
     public override List<GameObject> GetCurrentChoices()

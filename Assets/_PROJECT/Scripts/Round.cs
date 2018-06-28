@@ -33,7 +33,7 @@ public class Round : MonoBehaviour {
 		// TODO: deactivate choices from player input
 		// TODO: UI indicating Simon's turn
 
-		simonTurnObj = Instantiate((new GameObject("Simon's Turn")), transform);
+		simonTurnObj = Instantiate((new GameObject("Simon's Turn")), this.transform);
 		simonTurn = simonTurnObj.AddComponent<SimonTurn>() as SimonTurn;
 		//simonTurn = Instantiate(new SimonTurn(), transform);
 		Debug.Log("Simon's turn start");
@@ -48,7 +48,7 @@ public class Round : MonoBehaviour {
 		Debug.Log("Player's turn start");
 		// TODO: UI indicating player's turn
 
-		playerTurnObj = Instantiate((new GameObject("Player's Turn")), transform);
+		playerTurnObj = Instantiate((new GameObject("Player's Turn")), this.transform);
 		playerTurn = playerTurnObj.AddComponent<PlayerTurn>() as PlayerTurn;
 		//playerTurn = Instantiate(new PlayerTurn(), transform);
 	}

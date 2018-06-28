@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
 
     public void GameStart(DetectedPlane dp){
         activePlane = dp;
-        activeSessionObj = Instantiate(SessionPrefab, transform);
+        activeSessionObj = Instantiate(SessionPrefab, this.transform);
         ActiveSession = activeSessionObj.GetComponent<GameSession>();
         //IsGameStarted = true;
     }
