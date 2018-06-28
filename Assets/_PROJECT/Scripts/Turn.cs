@@ -6,11 +6,12 @@ using GoogleARCore;
 public abstract class Turn : MonoBehaviour {
 	
 	private Turn currentTurn;
+	private Round round;
 	private List<GameObject> currentChoices;
 	int currentRound;
 	bool turnActive;
 
-	//public abstract void EndTurn();
+	public abstract void EndTurn();
 	public abstract void StartTurn();
 	public abstract void StartTurn(List<GameObject> choiceHistory);
 	public abstract void RestartTurn();

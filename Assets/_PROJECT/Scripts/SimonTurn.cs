@@ -8,30 +8,33 @@ public class SimonTurn : Turn
 
 	//TODO: on creation of new turn, reference list of available choices
 	private Turn currentTurn;
+	private Round round;
 	private List<GameObject> currentChoices;
 	List<GameObject> pastChoices;
 	int currentRound;
 	bool turnActive;
+	
     void Awake()
     {
-		currentChoices = new List<GameObject>();
 		pastChoices = GameSession.SimonChoiceHistory;
-		currentRound = GameSession.roundNum;
+		currentChoices = pastChoices;
+		currentRound = GameSession.RoundNum;
 		turnActive = false;
 		currentTurn = this;
     }
 
-    /*public override void EndTurn()
+    public override void EndTurn()
     {
-		Destroy(currentTurn);
+		turnActive = false;
+		gameObject.SendMessageUpwards("EndSimonTurn", currentChoices);
         throw new System.NotImplementedException();
-    }*/
+    }
 
     public override void PlaybackChoices(List<GameObject> choices)
     {
         //TODO: playback animation
 
-		turnActive = false;
+		//turnActive = false;
     }
 
     public override void RestartTurn()
@@ -43,7 +46,7 @@ public class SimonTurn : Turn
 
     public override List<GameObject> SelectChoices()
     {
-        if(currentRound == 1){
+        if(currentRound == 0){
 			//TODO: Select three Choice objects at random
 			for(int i = 0; i < 3; i++){
 				currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
@@ -65,9 +68,9 @@ public class SimonTurn : Turn
 		PlaybackChoices(SelectChoices());
     }
 
-    public override List<GameObject> GetCurrentChoices()
+    /*public override List<GameObject> GetCurrentChoices()
     {
 		return currentChoices;
         throw new System.NotImplementedException();
-    }
+    }*/
 }

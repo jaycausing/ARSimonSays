@@ -6,18 +6,19 @@ using GoogleARCore;
 public class Round : MonoBehaviour {
  
 	//Simon and Player's turn
-	//Turn playerTurn;
-	//Turn simonTurn;
+	PlayerTurn playerTurn;
+	SimonTurn simonTurn;
 
+	public static List<GameObject> SimonChoiceHistory;
 	private static Round currentRound;
-	private int roundNum;
+	private int RoundNum;
 	
 	void Awake(){
-		roundNum = GameSession.roundNum;
+		RoundNum = GameSession.RoundNum;
 		currentRound = this;
 	}
 	void Start () {
-		
+		StartSimonTurn();
 	}
 	
 	void Update () {
@@ -25,15 +26,30 @@ public class Round : MonoBehaviour {
 	}
 
 	void StartSimonTurn(){
-
+		// TODO: deactivate choices from player input
+		simonTurn = Instantiate(new SimonTurn(), transform);
 	}
-	void EndSimonTurn(){
-
+	void EndSimonTurn(List<GameObject> simonsChoices){
+		SimonChoiceHistory = simonsChoices;
+		
+		// TODO: activate choices from player input
+		StartPlayerTurn();
 	}
 	void StartPlayerTurn(){
-		
+		playerTurn = Instantiate(new PlayerTurn(), transform);
 	}
-	void EndPlayerTurn(){
+	public void EndPlayerTurn(List<GameObject> playerChoices){
+		IsPlayerCorrect(playerChoices);
+	}
 
+	private void RestartRound(){
+		simonTurn.RestartTurn();
+	}
+
+	private void IsPlayerCorrect(List<GameObject> playerChoices){
+		if(playerChoices.Equals(SimonChoiceHistory))
+			gameObject.SendMessageUpwards("EndRound", SimonChoiceHistory);
+		else
+			RestartRound();
 	}
 }

@@ -10,7 +10,7 @@ public class GameSession : MonoBehaviour {
 	private DetectedPlane playArea;
 	private bool gameStatus;
 	private Anchor playAreaAnchor;
-	public static int roundNum;
+	public static int RoundNum;
 	private Round round;
 	
 	//TODO: remember to replace prototype
@@ -29,20 +29,19 @@ public class GameSession : MonoBehaviour {
 	private GameObject player;
 
 	//Simon's list
-	public static List<GameObject> SimonChoiceHistory = new List<GameObject>();
+	public static List<GameObject> SimonChoiceHistory;
 
-	
-
-	//Player points = round completed
-	protected int points;
 	//Player chances
 
 	void Awake(){
-		roundNum = 0;
+		RoundNum = 0;
+
 		playArea = GameManager.activePlane;
 		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
+		
 		player = GameObject.FindWithTag("Player");
-		points = 0;
+		
+		SimonChoiceHistory = new List<GameObject>();
 
 		session = this;
 	}
@@ -54,30 +53,23 @@ public class GameSession : MonoBehaviour {
 			availableChoicesSpawned[i] = availableChoices[i];
 		}
 
-		NextRound();
+		StartRound();
 	}
 
 
 	// used to create Round instances
 	public void StartRound() {
-
+		round = Instantiate(new Round(), transform);
 	}
 	
 	// used to end Round instances before starting a new one
-	public void NextRound() {
-		roundNum++;
-		round = Instantiate();
-		//StartRound();
-	}
-
-	public void RestartRound() {
-		//StartRound();
-	}
-
 	public void EndRound(List<GameObject> simonChoices){
+		// TODO: UI or anim event showing player is correct
+		// and moving on to the next round
 		SimonChoiceHistory = simonChoices;
 		Destroy(round);
-		NextRound();
+		RoundNum++;
+		StartRound();
 	}
 
 }

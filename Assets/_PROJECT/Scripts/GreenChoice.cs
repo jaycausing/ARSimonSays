@@ -18,25 +18,25 @@ public class GreenChoice : Choice {
 		isActiveToPlayer = false;
 	}
 
-    public GreenChoice(int i, Color c) {
+  public GreenChoice(int i, Color c) {
 		choiceNum = i;
 		choiceColor = c;
 		isActiveToPlayer = false;
-    }
+  }
 
-    public override void selectChoice() {
+  public override void selectChoice() {
 		gameObject.SendMessageUpwards("AddChoiceToList", choiceNum);
-    }
+  }
 
-    public override void setPlayerEnable() {
+  public override void setPlayerEnable() {
 		isActiveToPlayer = true;
-    }
+  }
 
 	public override void setPlayerDisable() {
-        isActiveToPlayer = false;
-    }
+    isActiveToPlayer = false;
+  }
 
-    public override void setChoiceNum(int i) {
-        choiceNum = i;
-    }
+  public override void setChoiceNum(int i) {
+      choiceNum = i;
+  }
 }
