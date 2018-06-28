@@ -40,8 +40,9 @@ public class GameManager : MonoBehaviour {
         // TODO: popup showing "Thanks for playing!"
          // and number of rounds won
          // and option to play again or quit
-
-         GameEnd();
+        int score = GameSession.RoundNum;
+        Debug.Log("Game over! Final score: " + score);
+        GameEnd();
     }
 
     public void GameEnd(){
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour {
     // TODO: add UI event listener to invoke this
     public void GameRestart(){
         // TODO: popup asking if player wants to restart game
+         Debug.Log("Restarting game");
          GameEnd();
          GameStart(activePlane);
     }
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour {
     public void GameQuit(){
         // TODO: popup asking if player wants to quit
         // execute rest of GameQuit if Yes
+        Debug.Log("Quitting application");
         if(ActiveSession != null)
             GameEnd();
         Application.Quit();

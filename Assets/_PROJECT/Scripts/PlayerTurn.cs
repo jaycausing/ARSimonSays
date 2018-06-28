@@ -33,14 +33,23 @@ public class PlayerTurn : Turn
                 PlaybackChoices(currentChoices);
             }
         }
-        gameObject.SendMessageUpwards("EndPlayerTurn", currentChoices);
+        EndTurn();
     }
 
     public override void PlaybackChoices(List<GameObject> choices)
     {
         //TODO: playback animation
-
+        Debug.Log("You have chosen...");
+		StartCoroutine(PrintChoicesInLog(choices));
     }
+
+    // DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
+	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+		foreach(GameObject choice in choices){
+			Debug.Log(choice.name);
+			yield return new WaitForSeconds(2);
+		}
+	}
 
     public override void RestartTurn()
     {
@@ -49,20 +58,32 @@ public class PlayerTurn : Turn
         throw new System.NotImplementedException();
     }
 
-    public override List<GameObject> SelectChoices()
+    /*public override List<GameObject> SelectChoices()
     {
         // do i even need this?
-    }
+    }*/
 
     public override void StartTurn()
     {
 		turnActive = true;
-        SelectChoices();
+        //SelectChoices();
     }
 
     public override List<GameObject> GetCurrentChoices()
     {
 		return currentChoices;
+        throw new System.NotImplementedException();
+    }
+
+    public override void StartTurn(List<GameObject> choiceHistory)
+    {
+        Debug.Log("App tried calling wrong StartTurn()");
+        throw new System.NotImplementedException();
+    }
+
+    public override List<GameObject> SelectChoices()
+    {
+        Debug.Log("App tried calling the wrong SelectChoices()");
         throw new System.NotImplementedException();
     }
 }

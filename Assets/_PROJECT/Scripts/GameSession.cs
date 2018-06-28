@@ -52,7 +52,7 @@ public class GameSession : MonoBehaviour {
 			Instantiate(availableChoices[i], spawnPositions[i], Quaternion.identity, playAreaAnchor.transform);
 			availableChoicesSpawned[i] = availableChoices[i];
 		}
-
+		Debug.Log("Game Session Start");
 		StartRound();
 	}
 
@@ -60,6 +60,7 @@ public class GameSession : MonoBehaviour {
 	// used to create Round instances
 	public void StartRound() {
 		round = Instantiate(new Round(), transform);
+		Debug.Log("Round " + RoundNum + " start");
 	}
 	
 	// used to end Round instances before starting a new one

@@ -59,9 +59,9 @@ public class ARCoreManager : MonoBehaviour {
 		
 		if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit)){
 			if (hit.Trackable is DetectedPlane){
-				Debug.Log("Plane is detected and tracking!");
-				Debug.Log("Touch position: " + hit.Pose.position);
-				Debug.Log("Distance from player: " + hit.Distance);
+				//Debug.Log("Plane is detected and tracking!");
+				//Debug.Log("Touch position: " + hit.Pose.position);
+				//Debug.Log("Distance from player: " + hit.Distance);
 			}
 		}
 

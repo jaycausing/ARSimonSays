@@ -12,20 +12,20 @@ public class SimonTurn : Turn
 	private List<GameObject> currentChoices;
 	List<GameObject> pastChoices;
 	int currentRound;
-	bool turnActive;
+	//bool turnActive;
 	
     void Awake()
     {
 		pastChoices = GameSession.SimonChoiceHistory;
 		currentChoices = pastChoices;
 		currentRound = GameSession.RoundNum;
-		turnActive = false;
+		//turnActive = false;
 		currentTurn = this;
     }
 
     public override void EndTurn()
     {
-		turnActive = false;
+		//turnActive = false;
 		gameObject.SendMessageUpwards("EndSimonTurn", currentChoices);
         throw new System.NotImplementedException();
     }
@@ -34,12 +34,24 @@ public class SimonTurn : Turn
     {
         //TODO: playback animation
 
+		Debug.Log("Simon has chosen...");
+		StartCoroutine(PrintChoicesInLog(choices));
+		
+		EndTurn();
 		//turnActive = false;
     }
 
+	// DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
+	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+		foreach(GameObject choice in choices){
+			Debug.Log(choice.name);
+			yield return new WaitForSeconds(2);
+		}
+	}
+
     public override void RestartTurn()
     {
-		turnActive = true;
+		//turnActive = true;
 		PlaybackChoices(currentChoices);
         throw new System.NotImplementedException();
     }
@@ -64,13 +76,20 @@ public class SimonTurn : Turn
 
     public override void StartTurn(List<GameObject> choiceHistory)
     {
-		turnActive = true;
+		//turnActive = true;
 		PlaybackChoices(SelectChoices());
     }
 
-    /*public override List<GameObject> GetCurrentChoices()
+    public override void StartTurn()
     {
-		return currentChoices;
+		Debug.Log("App tried calling wrong StartTurn()");
         throw new System.NotImplementedException();
-    }*/
+    }
+
+    public override List<GameObject> GetCurrentChoices()
+    {
+		Debug.Log("App tried calling the wrong SelectChoices()");
+        throw new System.NotImplementedException();
+    }
+
 }

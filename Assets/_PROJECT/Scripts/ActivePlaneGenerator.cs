@@ -23,7 +23,7 @@ public class ActivePlaneGenerator : MonoBehaviour {
 		Session.GetTrackables<DetectedPlane>(l_NewPlanes, TrackableQueryFilter.New);
 		for (int i = 0; i < l_NewPlanes.Count; i++){
 			GameObject activePlane = Instantiate(trackingPlanePrefab, Vector3.zero,
-				Quaternion.identity, transform);
+				Quaternion.identity, gameObject.transform);
 			activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_NewPlanes[i]);
 			Debug.Log("Plane spawned with area of: " + l_NewPlanes[i].ExtentX + " x " + l_NewPlanes[i].ExtentZ);
 			detectedPlane = l_NewPlanes[i];
