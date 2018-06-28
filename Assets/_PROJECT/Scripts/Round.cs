@@ -5,6 +5,10 @@ using GoogleARCore;
 
 public class Round : MonoBehaviour {
  
+	//Simon and Player's turn objs
+	GameObject playerTurnObj;
+	GameObject simonTurnObj;
+	
 	//Simon and Player's turn
 	PlayerTurn playerTurn;
 	SimonTurn simonTurn;
@@ -28,7 +32,10 @@ public class Round : MonoBehaviour {
 	void StartSimonTurn(){
 		// TODO: deactivate choices from player input
 		// TODO: UI indicating Simon's turn
-		simonTurn = Instantiate(new SimonTurn(), transform);
+
+		simonTurnObj = Instantiate((new GameObject("Simon's Turn")), transform);
+		simonTurn = simonTurnObj.AddComponent<SimonTurn>() as SimonTurn;
+		//simonTurn = Instantiate(new SimonTurn(), transform);
 		Debug.Log("Simon's turn start");
 	}
 	void EndSimonTurn(List<GameObject> simonsChoices){
@@ -40,7 +47,10 @@ public class Round : MonoBehaviour {
 	void StartPlayerTurn(){
 		Debug.Log("Player's turn start");
 		// TODO: UI indicating player's turn
-		playerTurn = Instantiate(new PlayerTurn(), transform);
+
+		playerTurnObj = Instantiate((new GameObject("Player's Turn")), transform);
+		playerTurn = playerTurnObj.AddComponent<PlayerTurn>() as PlayerTurn;
+		//playerTurn = Instantiate(new PlayerTurn(), transform);
 	}
 	public void EndPlayerTurn(List<GameObject> playerChoices){
 		Debug.Log("Player's turn end");

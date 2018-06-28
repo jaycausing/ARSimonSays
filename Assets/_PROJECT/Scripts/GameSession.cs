@@ -32,6 +32,10 @@ public class GameSession : MonoBehaviour {
 	public static List<GameObject> SimonChoiceHistory;
 
 	//Player chances
+	// TODO: Player chances
+
+	//Game Round object
+	private GameObject roundObj;
 
 	void Awake(){
 		RoundNum = 0;
@@ -59,7 +63,9 @@ public class GameSession : MonoBehaviour {
 
 	// used to create Round instances
 	public void StartRound() {
-		round = Instantiate(new Round(), transform);
+		roundObj = Instantiate((new GameObject("Round " + RoundNum)), transform);
+		round = roundObj.AddComponent<Round>() as Round;
+		//Instantiate(new Round(), transform);
 		Debug.Log("Round " + RoundNum + " start");
 	}
 	
@@ -69,6 +75,7 @@ public class GameSession : MonoBehaviour {
 		// and moving on to the next round
 		SimonChoiceHistory = simonChoices;
 		Destroy(round);
+		Destroy(roundObj);
 		RoundNum++;
 		StartRound();
 	}
