@@ -21,6 +21,10 @@ public class PlayerTurn : Turn
 		currentTurn = this;
     }
 
+    void Start(){
+		StartTurn();
+	}
+
     public override void EndTurn()
     {
         gameObject.SendMessageUpwards("EndPlayerTurn", currentChoices);

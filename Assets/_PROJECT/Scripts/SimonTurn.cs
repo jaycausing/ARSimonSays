@@ -23,11 +23,15 @@ public class SimonTurn : Turn
 		currentTurn = this;
     }
 
+	void Start(){
+		StartTurn();
+	}
+
     public override void EndTurn()
     {
 		//turnActive = false;
 		gameObject.SendMessageUpwards("EndSimonTurn", currentChoices);
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public override void PlaybackChoices(List<GameObject> choices)
