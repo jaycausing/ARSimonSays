@@ -35,11 +35,22 @@ public class GameManager : MonoBehaviour {
 
     public void GameEnd(){
          Destroy(activeSession);
+         // TODO: popup showing "Thanks for playing!"
+         // and number of rounds won
     }
 
     public void GameRestart(){
+        // TODO: popup asking if player wants to restart game
          GameEnd();
          GameStart(activePlane);
+    }
+
+    public void GameQuit(){
+        // TODO: popup asking if player wants to quit
+        // execute rest of GameQuit if Yes
+        if(activeSession != null)
+            Destroy(activeSession);
+        Application.Quit();
     }
      
 }

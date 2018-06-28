@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4585655625460178}
+  - component: {fileID: 114347294302343610}
   m_Layer: 0
   m_Name: GreenChoice
   m_TagString: Choice
@@ -37,7 +38,6 @@ GameObject:
   - component: {fileID: 33926449470031322}
   - component: {fileID: 23682249179982800}
   - component: {fileID: 65582696179036240}
-  - component: {fileID: 114640544561054732}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -53,7 +53,7 @@ Transform:
   m_GameObject: {fileID: 1914479165662998}
   m_LocalRotation: {x: 0.35355338, y: -0.1464466, z: 0.35355338, w: 0.8535535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4585655625460178}
   m_RootOrder: 0
@@ -64,8 +64,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1861257696329202}
-  m_LocalRotation: {x: 0, y: 0.7882055, z: -0.61541224, w: 0}
-  m_LocalPosition: {x: 0, y: 9.817178, z: -0.6380353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4538521950228288}
@@ -126,12 +126,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114640544561054732
+--- !u!114 &114347294302343610
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1914479165662998}
+  m_GameObject: {fileID: 1861257696329202}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1eacd32f3b152a44aad65b67cf5312e, type: 3}
