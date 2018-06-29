@@ -85,4 +85,26 @@ public class Round : MonoBehaviour {
 			//RestartRound();
 		}
 	}
+
+	public void CancelRound(){
+		StartCoroutine(CancelRoundCoroutine());
+	}
+
+	public IEnumerator CancelRoundCoroutine(){
+		if(playerTurn){
+			playerTurn.StopAllCoroutines();
+			playerTurn.CancelInvoke();
+			Debug.Log("Player turn functions are cancelled");
+			yield return new WaitForSeconds(1);
+			Destroy(playerTurn);
+		}
+		simonTurn.StopAllCoroutines();
+		simonTurn.CancelInvoke();
+		Debug.Log("Simon turn functions are cancelled");
+		Destroy(simonTurn);
+		yield return new WaitForSeconds(1);
+		CancelInvoke();
+		StopAllCoroutines();
+		yield return new WaitForSeconds(1);
+	}
 }

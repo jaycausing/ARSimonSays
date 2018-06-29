@@ -15,18 +15,24 @@ public class UIManager : MonoBehaviour {
 
     private GameObject SearchingUI;
     private GameObject GameManageUI;
+    private GameObject GameStartUI;
     private GameObject RestartBtn;
     private GameObject RestartConfirmPopup;
     private GameObject GameOverMessage;
+
+    Text scoreText;
 
     private GameManager GameManagerObj;
 
     void Awake(){
         SearchingUI = GameObject.Find("SearchingUI");
         GameManageUI = GameObject.Find("GameManageUI");
+        GameStartUI = GameObject.Find("GameStart");
         RestartBtn = GameObject.Find("RestartBtn");
         RestartConfirmPopup = GameObject.Find("RestartConfirmPopup");
         GameOverMessage = GameObject.Find("GameOverMessage");
+
+        scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 
         GameManagerObj = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
@@ -34,6 +40,7 @@ public class UIManager : MonoBehaviour {
     void Start(){
         SearchingUI.SetActive(false);
         GameManageUI.SetActive(false);
+        GameStartUI.SetActive(false);
         RestartBtn.SetActive(false);
         RestartConfirmPopup.SetActive(false);
         GameOverMessage.SetActive(false);
@@ -49,12 +56,15 @@ public class UIManager : MonoBehaviour {
         SearchingUI.SetActive(true);
         GameManageUI.SetActive(true);
         RestartBtn.SetActive(true);
-        StartCoroutine(DeleteUIAfterWait(GameObject.Find("GameStart")));
 	}
+
+    public void ShowGameStartMessage(){
+        GameStartUI.SetActive(true);
+        StartCoroutine(DeactivateUIAfterWait(GameStartUI));
+    }
 
     public void ShowGameOverMessage(int score){
         GameOverMessage.SetActive(true);
-        Text scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         scoreText.text = scoreText.text + score;
     }
 
@@ -64,15 +74,31 @@ public class UIManager : MonoBehaviour {
          RestartBtn.SetActive(false);
          RestartConfirmPopup.SetActive(true);
     }
-    public void GameRestart(){
-         Debug.Log("Restarting game");
-         RestartBtn.SetActive(false);
-         RestartConfirmPopup.SetActive(true);
 
-         GameManagerObj.GameEnd();
+    public void GameRestart(){
+        RestartConfirmPopup.SetActive(false);
+        StartCoroutine(RestartingGame());
+    }
+
+    public IEnumerator RestartingGame(){
+         Debug.Log("Restarting game");
+
+        if(GameStartUI != null){
+            if(IsInvoking("DeleteUIAfterWait"))
+                StopCoroutine(DeactivateUIAfterWait(GameStartUI));
+            GameStartUI.SetActive(false);
+        }
+        if(GameOverMessage != null){
+            GameOverMessage.SetActive(false);
+            scoreText.text = scoreText.text;
+        }
+
+         yield return StartCoroutine(GameManagerObj.GameEnd());
+         //Debug.Log("Game ended");
+         //yield return new WaitForSeconds(3);
+         Debug.Log("Game restarting");
          GameManagerObj.GameStart();
-         //SessionPrefab.SetActive(true);
-         //GameStart(activePlane);
+         RestartBtn.SetActive(true);
     }
     public void GameRestartCancel(){
          RestartBtn.SetActive(true);
@@ -89,8 +115,8 @@ public class UIManager : MonoBehaviour {
         // yield return new WaitForSeconds(0.1f);
     }
 
-    public IEnumerator DeleteUIAfterWait(GameObject UIObject){
-        yield return new WaitForSeconds(3);
-        Destroy(UIObject);
+    public IEnumerator DeactivateUIAfterWait(GameObject UIObject){
+        yield return new WaitForSeconds(5);
+        UIObject.SetActive(false);
     }
 }

@@ -40,6 +40,7 @@ public class PlayerTurn : Turn
 	}
 
     IEnumerator SelectChoices(){
+        
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
     }
 

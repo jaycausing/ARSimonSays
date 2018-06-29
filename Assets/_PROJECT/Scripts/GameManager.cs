@@ -33,23 +33,24 @@ public class GameManager : MonoBehaviour {
             if(!session.isActiveAndEnabled){
                 activePlane = ActivePlaneGenerator.GetActivePlane();
                 GameStart();
-                //SessionPrefab.SetActive(true);
-                //GameStart(ActivePlaneGenerator.GetActivePlane());
             }
         }
     }
 
     public void GameOver(){
         UIManagerObj.ShowGameOverMessage(GameSession.RoundNum);
-        GameEnd();
+        StartCoroutine(GameEnd());
     }
 
     public void GameStart(){
+        UIManagerObj.ShowGameStartMessage();
         session.enabled = true;
     }
 
-    public void GameEnd(){
-         session.enabled = false;
+    public IEnumerator GameEnd(){
+        yield return StartCoroutine(session.DisablingSession());
+        Debug.Log("Session disabled");
+        session.enabled = false;
     }
 
     // TODO: add UI event listener to invoke this
