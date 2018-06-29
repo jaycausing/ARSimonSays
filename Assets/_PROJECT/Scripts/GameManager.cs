@@ -18,71 +18,41 @@ public class GameManager : MonoBehaviour {
     //private GameObject activeSessionObj;
     //public static bool IsGameStarted;
 
-    GameSession session;
+    private GameSession session;
     public static DetectedPlane activePlane;
+    private UIManager UIManagerObj;
+    
     
     void Start(){
         session = GetComponentInChildren<GameSession>();
+        UIManagerObj = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     void Update() {
         if(ActivePlaneGenerator.GetActivePlaneStatus()){
             if(!session.isActiveAndEnabled){
                 activePlane = ActivePlaneGenerator.GetActivePlane();
-                session.enabled = true;
+                GameStart();
                 //SessionPrefab.SetActive(true);
                 //GameStart(ActivePlaneGenerator.GetActivePlane());
             }
         }
     }
 
-    /*public void GameStart(DetectedPlane dp){
-        
-        activeSessionObj = Instantiate(SessionPrefab, this.transform);
-        ActiveSession = activeSessionObj.GetComponent<GameSession>();
-        //IsGameStarted = true;
-    }*/
-
-    // TODO: OnGUI events for Restart and Quit
-    /*void OnGUI() {
-        
-    }*/
-
     public void GameOver(){
-        // TODO: popup showing "Thanks for playing!"
-         // and number of rounds won
-         // and option to play again or quit
-        int score = GameSession.RoundNum;
-        Debug.Log("Game over! Final score: " + score);
+        UIManagerObj.ShowGameOverMessage(GameSession.RoundNum);
         GameEnd();
+    }
+
+    public void GameStart(){
+        session.enabled = true;
     }
 
     public void GameEnd(){
          session.enabled = false;
-         //SessionPrefab.SetActive(false);
-         //Destroy(activeSessionObj);
-         //ActiveSession = null;
     }
 
     // TODO: add UI event listener to invoke this
-    public void GameRestart(){
-        // TODO: popup asking if player wants to restart game
-         Debug.Log("Restarting game");
-         GameEnd();
-         session.enabled = true;
-         //SessionPrefab.SetActive(true);
-         //GameStart(activePlane);
-    }
-
-    // TODO: add UI event listener to invoke this
-    public void GameQuit(){
-        // TODO: popup asking if player wants to quit
-        // execute rest of GameQuit if Yes
-        Debug.Log("Quitting application");
-        if(session.isActiveAndEnabled)
-            GameEnd();
-        Destroy(session);
-        Application.Quit();
-    }
+    
      
 }

@@ -24,11 +24,7 @@ public class ARCoreManager : MonoBehaviour {
 	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
 
 	void Awake() {
-		//SceneUI = GameObject.FindWithTag("SceneUI");
-		//GameUI = GameObject.FindWithTag("GameUI");
 
-		//setSceneUI(true);
-		//setGameUI(false);
 	}
 
 	void OnEnable() {
@@ -39,7 +35,6 @@ public class ARCoreManager : MonoBehaviour {
 		Utils.QuitOnConnectionError();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		Utils.UpdateAppLifecycle();
 
