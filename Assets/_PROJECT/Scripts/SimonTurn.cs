@@ -42,12 +42,13 @@ public class SimonTurn : Turn
 
 	// DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
-		yield return new WaitForSeconds(3);
 		Debug.Log("Simon has chosen...");
+		yield return new WaitForSeconds(3);
 		foreach(GameObject choice in choices){
 			Debug.Log(choice.name);
 			yield return new WaitForSeconds(2);
 		}
+		yield return new WaitForSeconds(3);
 	}
 
     public IEnumerator RestartTurn()

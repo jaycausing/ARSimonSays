@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using GoogleARCore;
 
 public class Round : MonoBehaviour {
  
-	//Simon and Player's turn objs
-	//GameObject playerTurnObj;
-	//GameObject simonTurnObj;
+	// UI Objects
+	//Text CurrentTurnText;
+	string defautTurnText;
 	
 	//Simon and Player's turn
 	PlayerTurn playerTurn;
@@ -18,11 +19,13 @@ public class Round : MonoBehaviour {
 	//private int RoundNum;
 	
 	void OnEnable(){
-		//RoundNum = GameSession.RoundNum;
+		//CurrentTurnText = GameObject.Find("CurrentTurnText").GetComponent<Text>();
+		defautTurnText = GameObject.Find("CurrentTurnText").GetComponent<Text>().text;
 		currentRound = this;
 	}
 
 	void OnDisable(){
+		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText;
 		Destroy(currentRound);
 	}
 
@@ -36,14 +39,10 @@ public class Round : MonoBehaviour {
 
 	void StartSimonTurn(){
 		// TODO: deactivate choices from player input
-		// TODO: UI indicating Simon's turn
 
 		simonTurn = gameObject.AddComponent<SimonTurn>() as SimonTurn;
 
-		//simonTurnObj = Instantiate((new GameObject("Simon's Turn")), this.transform);
-		//simonTurn = simonTurnObj.AddComponent<SimonTurn>() as SimonTurn;
-		//simonTurn = Instantiate(new SimonTurn(), transform);
-		Debug.Log("Simon's turn start");
+		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "Simon";
 	}
 	void EndSimonTurn(List<GameObject> simonsChoices){
 		SimonChoiceHistory = simonsChoices;
@@ -52,12 +51,8 @@ public class Round : MonoBehaviour {
 		StartPlayerTurn();
 	}
 	void StartPlayerTurn(){
-		Debug.Log("Player's turn start");
-		// TODO: UI indicating player's turn
-
-		//playerTurnObj = Instantiate((new GameObject("Player's Turn")), this.transform);
 		playerTurn = gameObject.AddComponent<PlayerTurn>() as PlayerTurn;
-		//playerTurn = Instantiate(new PlayerTurn(), transform);
+		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "You";
 	}
 	public void EndPlayerTurn(List<GameObject> playerChoices){
 		Debug.Log("Player's turn end");

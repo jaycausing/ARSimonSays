@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour {
     private GameObject RestartBtn;
     private GameObject RestartConfirmPopup;
     private GameObject GameOverMessage;
+    private GameObject CurrentTurnText;
 
     Text scoreText;
 
@@ -31,6 +32,7 @@ public class UIManager : MonoBehaviour {
         RestartBtn = GameObject.Find("RestartBtn");
         RestartConfirmPopup = GameObject.Find("RestartConfirmPopup");
         GameOverMessage = GameObject.Find("GameOverMessage");
+        CurrentTurnText = GameObject.Find("CurrentTurnText");
 
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
 
@@ -44,6 +46,7 @@ public class UIManager : MonoBehaviour {
         RestartBtn.SetActive(false);
         RestartConfirmPopup.SetActive(false);
         GameOverMessage.SetActive(false);
+        CurrentTurnText.SetActive(false);
     }
 
     /// Start Game Button ///
@@ -56,6 +59,7 @@ public class UIManager : MonoBehaviour {
         SearchingUI.SetActive(true);
         GameManageUI.SetActive(true);
         RestartBtn.SetActive(true);
+        CurrentTurnText.SetActive(true);
 	}
 
     public void ShowGameStartMessage(){
@@ -94,6 +98,7 @@ public class UIManager : MonoBehaviour {
         }
 
          yield return StartCoroutine(GameManagerObj.GameEnd());
+         CurrentTurnText.SetActive(false);
          //Debug.Log("Game ended");
          //yield return new WaitForSeconds(3);
          Debug.Log("Game restarting");
