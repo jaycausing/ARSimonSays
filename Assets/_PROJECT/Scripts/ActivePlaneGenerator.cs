@@ -11,6 +11,9 @@ public class ActivePlaneGenerator : MonoBehaviour {
 	private static bool isPlaneActive;
 	private static List<DetectedPlane> l_NewPlanes = new List<DetectedPlane>();
 
+	[SerializeField]
+	public static bool StartTracking = false;
+
 	void Awake() {
 		isPlaneActive = false;
 	}
@@ -20,16 +23,17 @@ public class ActivePlaneGenerator : MonoBehaviour {
 			return;
 		}
 
-		Session.GetTrackables<DetectedPlane>(l_NewPlanes, TrackableQueryFilter.New);
-		for (int i = 0; i < l_NewPlanes.Count; i++){
-			GameObject activePlane = Instantiate(trackingPlanePrefab, Vector3.zero,
-				Quaternion.identity, gameObject.transform);
-			activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_NewPlanes[i]);
-			Debug.Log("Plane spawned with area of: " + l_NewPlanes[i].ExtentX + " x " + l_NewPlanes[i].ExtentZ);
-			detectedPlane = l_NewPlanes[i];
-			isPlaneActive = true;
+		if(StartTracking){
+			Session.GetTrackables<DetectedPlane>(l_NewPlanes, TrackableQueryFilter.New);
+			for (int i = 0; i < l_NewPlanes.Count; i++){
+				GameObject activePlane = Instantiate(trackingPlanePrefab, Vector3.zero,
+					Quaternion.identity, gameObject.transform);
+				activePlane.GetComponent<DetectedPlaneVisualizer>().Initialize(l_NewPlanes[i]);
+				Debug.Log("Plane spawned with area of: " + l_NewPlanes[i].ExtentX + " x " + l_NewPlanes[i].ExtentZ);
+				detectedPlane = l_NewPlanes[i];
+				isPlaneActive = true;
+			}
 		}
-		
 	}
 
 	public static bool GetActivePlaneStatus(){
@@ -39,4 +43,5 @@ public class ActivePlaneGenerator : MonoBehaviour {
 	public static DetectedPlane GetActivePlane(){
 		return detectedPlane;
 	}
+
 }

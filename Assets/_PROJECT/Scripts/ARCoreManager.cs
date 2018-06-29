@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using GoogleARCore;
 
@@ -16,7 +17,7 @@ public class ARCoreManager : MonoBehaviour {
 	public GameObject ARCoreDevice;
 
 	//private GameObject SceneUI;
-	//private GameObject GameUI;
+	//
 
 
 	// holds planes app is currently tracking that frame
@@ -31,17 +32,12 @@ public class ARCoreManager : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		//SceneUI = GameObject.FindWithTag("SceneUI");
-		//GameUI = GameObject.FindWithTag("GameUI");
+		
 	}
 	
 	void Start () {
 		Utils.QuitOnConnectionError();
 	}
-
-	void OnGUI() {
-        
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,10 +46,13 @@ public class ARCoreManager : MonoBehaviour {
 		if(Session.Status == SessionStatus.NotTracking)
 			return;
 
-		Session.GetTrackables<DetectedPlane>(l_Planes);
-		for (int i = 0; i < l_Planes.Count; i++){
-            if (l_Planes[i].TrackingState == TrackingState.Tracking){
-				//setGameUI(false);
+		if(ActivePlaneGenerator.StartTracking){
+			Session.GetTrackables<DetectedPlane>(l_Planes);
+			for (int i = 0; i < l_Planes.Count; i++){
+				if (l_Planes[i].TrackingState == TrackingState.Tracking){
+					if(GameObject.Find("SearchingUI"))
+						GameObject.Find("SearchingUI").SetActive(false);
+				}
 			}
 		}
 		
