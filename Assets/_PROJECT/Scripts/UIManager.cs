@@ -99,8 +99,6 @@ public class UIManager : MonoBehaviour {
 
          yield return StartCoroutine(GameManagerObj.GameEnd());
          CurrentTurnText.SetActive(false);
-         //Debug.Log("Game ended");
-         //yield return new WaitForSeconds(3);
          Debug.Log("Game restarting");
          GameManagerObj.GameStart();
          RestartBtn.SetActive(true);

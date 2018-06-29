@@ -7,7 +7,6 @@ using GoogleARCore;
 public class Round : MonoBehaviour {
  
 	// UI Objects
-	//Text CurrentTurnText;
 	string defautTurnText;
 	
 	//Simon and Player's turn
@@ -16,11 +15,8 @@ public class Round : MonoBehaviour {
 
 	public static List<GameObject> SimonChoiceHistory;
 	private static Round currentRound;
-	//private int RoundNum;
 	
 	void OnEnable(){
-		//CurrentTurnText = GameObject.Find("CurrentTurnText").GetComponent<Text>();
-		defautTurnText = GameObject.Find("CurrentTurnText").GetComponent<Text>().text;
 		currentRound = this;
 	}
 
@@ -30,6 +26,7 @@ public class Round : MonoBehaviour {
 	}
 
 	void Start () {
+		defautTurnText = GameObject.Find("CurrentTurnText").GetComponent<Text>().text;
 		StartSimonTurn();
 	}
 	
@@ -39,7 +36,9 @@ public class Round : MonoBehaviour {
 
 	void StartSimonTurn(){
 		// TODO: deactivate choices from player input
-
+		GameObject.Find("CurrentTurnText").GetComponent<Text>().text =
+		defautTurnText + "Simon";
+		
 		simonTurn = gameObject.AddComponent<SimonTurn>() as SimonTurn;
 
 		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "Simon";
@@ -51,6 +50,8 @@ public class Round : MonoBehaviour {
 		StartPlayerTurn();
 	}
 	void StartPlayerTurn(){
+		GameObject.Find("CurrentTurnText").GetComponent<Text>().text =
+		defautTurnText + "You";
 		playerTurn = gameObject.AddComponent<PlayerTurn>() as PlayerTurn;
 		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "You";
 	}

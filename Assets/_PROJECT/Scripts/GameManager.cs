@@ -5,18 +5,6 @@ using GoogleARCore;
 using GoogleARCore.Examples.Common;
 
 public class GameManager : MonoBehaviour {
-    /*
-    GameManager handles the following
-    - creating and destroying game sessions
-    - allocating data between Player/Simon and session
-    - player score
-     */
-    
-    //ITS CAUSE THIS NEVER BECAME A THING
-    //public static GameSession ActiveSession = null;
-    //public GameObject SessionPrefab;
-    //private GameObject activeSessionObj;
-    //public static bool IsGameStarted;
 
     private GameSession session;
     public static DetectedPlane activePlane;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using GoogleARCore;
 
 public class PlayerTurn : Turn
@@ -13,9 +14,22 @@ public class PlayerTurn : Turn
 	//int currentRound;
 	bool turnActive;
 
+    Text EntityChoices;
+	Text ColorChoiceText;
+    Text PlayerChoiceText;
+
     void OnEnable() {
-		currentChoices = new List<GameObject>();
+        EntityChoices = GameObject.Find("EntityChoices").GetComponent<Text>();
+		ColorChoiceText = GameObject.Find("EntityChoices").GetComponent<Text>();
+		PlayerChoiceText = GameObject.Find("PlayerChoiceText").GetComponent<Text>();
+        currentChoices = new List<GameObject>();
 		currentTurn = this;
+    }
+
+    void OnDisable(){
+        EntityChoices.text = "";
+		ColorChoiceText.text = "";
+        PlayerChoiceText.text = "";
     }
 
     void Start(){
@@ -23,6 +37,9 @@ public class PlayerTurn : Turn
 	}
 
     public override void EndTurn() {
+        EntityChoices.text = "";
+		ColorChoiceText.text = "";
+        PlayerChoiceText.text = "";
         gameObject.SendMessageUpwards("EndPlayerTurn", currentChoices);
     }
 
@@ -33,14 +50,16 @@ public class PlayerTurn : Turn
 	}
 
     IEnumerator SelectChoices(){
+        PlayerChoiceText.text = "Tap on a cube to select it";
+        //TODO: Touch object to select it
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
     }
 
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
-		Debug.Log("Player has chosen...");
+		EntityChoices.text = "You have chosen...";
         yield return new WaitForSeconds(3);
 		foreach(GameObject choice in choices){
-			Debug.Log(choice.name);
+			ColorChoiceText.text = choice.name;
 			yield return new WaitForSeconds(3);
 		}
 	}

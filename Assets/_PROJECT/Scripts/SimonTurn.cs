@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using GoogleARCore;
 
 public class SimonTurn : Turn
@@ -10,17 +11,21 @@ public class SimonTurn : Turn
 	private Turn currentTurn;
 	//private Round round;
 	private List<GameObject> currentChoices;
-	//List<GameObject> pastChoices;
-	//int currentRound;
-	//bool turnActive;
 	
-    void OnEnable()
-    {
-		//pastChoices = GameSession.SimonChoiceHistory;
-		currentChoices = GameSession.SimonChoiceHistory;;
-		//currentRound = GameSession.RoundNum;
+	Text EntityChoices;
+	Text ColorChoiceText;
+
+    void OnEnable() {
+		EntityChoices = GameObject.Find("EntityChoices").GetComponent<Text>();
+		ColorChoiceText = GameObject.Find("EntityChoices").GetComponent<Text>();
+		currentChoices = GameSession.SimonChoiceHistory;
 		currentTurn = this;
     }
+
+	void OnDisable() {
+		EntityChoices.text = "";
+		ColorChoiceText.text = "";
+	}
 
 	void Start(){
 		StartCoroutine(StartTurn());
@@ -32,20 +37,19 @@ public class SimonTurn : Turn
 		EndTurn();
 	}
 
-    public override void EndTurn()
-    {
-		//turnActive = false;
+    public override void EndTurn() {
+		EntityChoices.text = "";
+		ColorChoiceText.text = "";
 		gameObject.SendMessageUpwards("EndSimonTurn", currentChoices);
-        //throw new System.NotImplementedException();
     }
 
 
 	// DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
-		Debug.Log("Simon has chosen...");
+		EntityChoices.text = "Simon's choices are...";
 		yield return new WaitForSeconds(3);
 		foreach(GameObject choice in choices){
-			Debug.Log(choice.name);
+			ColorChoiceText.text = choice.name;
 			yield return new WaitForSeconds(2);
 		}
 		yield return new WaitForSeconds(3);
