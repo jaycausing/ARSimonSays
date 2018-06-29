@@ -12,7 +12,7 @@ public class PlayerTurn : Turn
 	private List<GameObject> currentChoices;
 	//int currentRound;
 	bool turnActive;
-    
+
     void OnEnable()
     {
         //round = gameObject.GetComponentInParent<Round>();
@@ -22,6 +22,7 @@ public class PlayerTurn : Turn
 		currentTurn = this;
     }
 
+    // FIXME: App crashes when Player's turn starts
     void Start(){
         turnActive = true;
 		//StartTurn();
