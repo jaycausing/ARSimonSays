@@ -106,6 +106,8 @@ public class GameSession : MonoBehaviour {
 	public void StartRound() {
 		//round = gameObject.AddComponent<Round>() as Round;
 		
+
+
 		round = roundObj.AddComponent<Round>() as Round;
 		Debug.Log("Round begin");
 		//Instantiate(new Round(), transform);
