@@ -7,22 +7,24 @@ public class PlayerTurn : Turn
 {
 
 	//TODO: on creation of new turn, reference list of available choices
-	private Round round;
+	//private Round round;
     private Turn currentTurn;
 	private List<GameObject> currentChoices;
-	int currentRound;
+	//int currentRound;
 	bool turnActive;
-    void Awake()
+    
+    void OnEnable()
     {
-        round = gameObject.GetComponentInParent<Round>();
+        //round = gameObject.GetComponentInParent<Round>();
 		currentChoices = new List<GameObject>();
-		currentRound = GameSession.RoundNum;
+		//currentRound = GameSession.RoundNum;
 		turnActive = false;
 		currentTurn = this;
     }
 
     void Start(){
-		StartTurn();
+        turnActive = true;
+		//StartTurn();
 	}
 
     public override void EndTurn()
@@ -34,21 +36,23 @@ public class PlayerTurn : Turn
         while(turnActive){
             if(currentChoices.Count == Round.SimonChoiceHistory.Count){
                 turnActive = false;
-                PlaybackChoices(currentChoices);
+                StartCoroutine(PrintChoicesInLog(currentChoices));
             }
         }
         EndTurn();
     }
 
-    public override void PlaybackChoices(List<GameObject> choices)
+    /*public override void PlaybackChoices(List<GameObject> choices)
     {
         //TODO: playback animation
         Debug.Log("You have chosen...");
-		StartCoroutine(PrintChoicesInLog(choices));
-    }
+        Debug.Log(currentChoices.ToString());
+		//StartCoroutine(PrintChoicesInLog(choices));
+    }*/
 
     // DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+		Debug.Log("Player has chosen...");
 		foreach(GameObject choice in choices){
 			Debug.Log(choice.name);
 			yield return new WaitForSeconds(2);
@@ -58,7 +62,8 @@ public class PlayerTurn : Turn
     public override void RestartTurn()
     {
 		currentChoices.Clear();
-        StartTurn();
+        turnActive = true;
+        //StartTurn();
         throw new System.NotImplementedException();
     }
 
@@ -67,21 +72,21 @@ public class PlayerTurn : Turn
         // do i even need this?
     }*/
 
-    public override void StartTurn()
+    /*public override void StartTurn()
     {
 		turnActive = true;
         //SelectChoices();
-    }
+    }*/
 
     public override List<GameObject> GetCurrentChoices()
     {
 		return currentChoices;
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
-    public override List<GameObject> SelectChoices()
+    /*public override List<GameObject> SelectChoices()
     {
         Debug.Log("App tried calling the wrong SelectChoices()");
         throw new System.NotImplementedException();
-    }
+    }*/
 }

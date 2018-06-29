@@ -13,28 +13,40 @@ public class GameManager : MonoBehaviour {
      */
     
     //ITS CAUSE THIS NEVER BECAME A THING
-    public static GameSession ActiveSession = null;
-    public GameObject SessionPrefab;
-    private GameObject activeSessionObj;
+    //public static GameSession ActiveSession = null;
+    //public GameObject SessionPrefab;
+    //private GameObject activeSessionObj;
     //public static bool IsGameStarted;
+
+    GameSession session;
     public static DetectedPlane activePlane;
     
     void Awake(){
-        //IsGameStarted = false;
+        session = GetComponentInChildren<GameSession>();
     }
+
     void Update() {
         if(ActivePlaneGenerator.GetActivePlaneStatus() == true &&
-        ActiveSession == null){
-           GameStart(ActivePlaneGenerator.GetActivePlane());
+        !session.isActiveAndEnabled){
+        //ActiveSession == null){
+            activePlane = ActivePlaneGenerator.GetActivePlane();
+            session.enabled = true;
+            //SessionPrefab.SetActive(true);
+           //GameStart(ActivePlaneGenerator.GetActivePlane());
         }
     }
 
-    public void GameStart(DetectedPlane dp){
-        activePlane = dp;
+    /*public void GameStart(DetectedPlane dp){
+        
         activeSessionObj = Instantiate(SessionPrefab, this.transform);
         ActiveSession = activeSessionObj.GetComponent<GameSession>();
         //IsGameStarted = true;
-    }
+    }*/
+
+    // TODO: OnGUI events for Restart and Quit
+    /*void OnGUI() {
+        
+    }*/
 
     public void GameOver(){
         // TODO: popup showing "Thanks for playing!"
@@ -46,8 +58,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameEnd(){
-         Destroy(activeSessionObj);
-         ActiveSession = null;
+         session.enabled = false;
+         //SessionPrefab.SetActive(false);
+         //Destroy(activeSessionObj);
+         //ActiveSession = null;
     }
 
     // TODO: add UI event listener to invoke this
@@ -55,7 +69,9 @@ public class GameManager : MonoBehaviour {
         // TODO: popup asking if player wants to restart game
          Debug.Log("Restarting game");
          GameEnd();
-         GameStart(activePlane);
+         session.enabled = true;
+         //SessionPrefab.SetActive(true);
+         //GameStart(activePlane);
     }
 
     // TODO: add UI event listener to invoke this
@@ -63,8 +79,9 @@ public class GameManager : MonoBehaviour {
         // TODO: popup asking if player wants to quit
         // execute rest of GameQuit if Yes
         Debug.Log("Quitting application");
-        if(ActiveSession != null)
+        if(session.isActiveAndEnabled)
             GameEnd();
+        Destroy(session);
         Application.Quit();
     }
      

@@ -15,24 +15,33 @@ public class ARCoreManager : MonoBehaviour {
 
 	public GameObject ARCoreDevice;
 
-	private GameObject SceneUI;
-	private GameObject GameUI;
+	//private GameObject SceneUI;
+	//private GameObject GameUI;
 
 
 	// holds planes app is currently tracking that frame
 	private List<DetectedPlane> l_Planes = new List<DetectedPlane>();
 
 	void Awake() {
-		SceneUI = GameObject.FindWithTag("SceneUI");
-		GameUI = GameObject.FindWithTag("GameUI");
+		//SceneUI = GameObject.FindWithTag("SceneUI");
+		//GameUI = GameObject.FindWithTag("GameUI");
 
-		setSceneUI(true);
-		setGameUI(false);
+		//setSceneUI(true);
+		//setGameUI(false);
+	}
+
+	void OnEnable() {
+		//SceneUI = GameObject.FindWithTag("SceneUI");
+		//GameUI = GameObject.FindWithTag("GameUI");
 	}
 	
 	void Start () {
 		Utils.QuitOnConnectionError();
 	}
+
+	void OnGUI() {
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -44,7 +53,7 @@ public class ARCoreManager : MonoBehaviour {
 		Session.GetTrackables<DetectedPlane>(l_Planes);
 		for (int i = 0; i < l_Planes.Count; i++){
             if (l_Planes[i].TrackingState == TrackingState.Tracking){
-				setGameUI(false);
+				//setGameUI(false);
 			}
 		}
 		
@@ -67,13 +76,13 @@ public class ARCoreManager : MonoBehaviour {
 
 	}
 
-	public void StartGameOnClick(){
+	/*public void StartGameOnClick(){
 		setSceneUI(false);
 		setGameUI(true);
-	}
+	}*/
 
-	public void setSceneUI(bool setScene) { SceneUI.SetActive(setScene); }
-	public void setGameUI(bool setGame) { GameUI.SetActive(setGame); }
+	//public void setSceneUI(bool setScene) { SceneUI.SetActive(setScene); }
+	//public void setGameUI(bool setGame) { GameUI.SetActive(setGame); }
 
 
 

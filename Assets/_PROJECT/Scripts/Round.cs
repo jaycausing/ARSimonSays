@@ -6,8 +6,8 @@ using GoogleARCore;
 public class Round : MonoBehaviour {
  
 	//Simon and Player's turn objs
-	GameObject playerTurnObj;
-	GameObject simonTurnObj;
+	//GameObject playerTurnObj;
+	//GameObject simonTurnObj;
 	
 	//Simon and Player's turn
 	PlayerTurn playerTurn;
@@ -15,12 +15,17 @@ public class Round : MonoBehaviour {
 
 	public static List<GameObject> SimonChoiceHistory;
 	private static Round currentRound;
-	private int RoundNum;
+	//private int RoundNum;
 	
-	void Awake(){
-		RoundNum = GameSession.RoundNum;
+	void OnEnable(){
+		//RoundNum = GameSession.RoundNum;
 		currentRound = this;
 	}
+
+	void OnDisable(){
+		Destroy(currentRound);
+	}
+
 	void Start () {
 		StartSimonTurn();
 	}
@@ -33,8 +38,10 @@ public class Round : MonoBehaviour {
 		// TODO: deactivate choices from player input
 		// TODO: UI indicating Simon's turn
 
-		simonTurnObj = Instantiate((new GameObject("Simon's Turn")), this.transform);
-		simonTurn = simonTurnObj.AddComponent<SimonTurn>() as SimonTurn;
+		simonTurn = gameObject.AddComponent<SimonTurn>() as SimonTurn;
+
+		//simonTurnObj = Instantiate((new GameObject("Simon's Turn")), this.transform);
+		//simonTurn = simonTurnObj.AddComponent<SimonTurn>() as SimonTurn;
 		//simonTurn = Instantiate(new SimonTurn(), transform);
 		Debug.Log("Simon's turn start");
 	}
@@ -48,8 +55,8 @@ public class Round : MonoBehaviour {
 		Debug.Log("Player's turn start");
 		// TODO: UI indicating player's turn
 
-		playerTurnObj = Instantiate((new GameObject("Player's Turn")), this.transform);
-		playerTurn = playerTurnObj.AddComponent<PlayerTurn>() as PlayerTurn;
+		//playerTurnObj = Instantiate((new GameObject("Player's Turn")), this.transform);
+		playerTurn = gameObject.AddComponent<PlayerTurn>() as PlayerTurn;
 		//playerTurn = Instantiate(new PlayerTurn(), transform);
 	}
 	public void EndPlayerTurn(List<GameObject> playerChoices){
@@ -58,7 +65,8 @@ public class Round : MonoBehaviour {
 	}
 
 	private void RestartRound(){
-		Debug.Log("Restarting round " + RoundNum);
+		Debug.Log("Restarting round " + GameSession.RoundNum);
+		//Debug.Log("Restarting round " + RoundNum);
 		simonTurn.RestartTurn();
 	}
 

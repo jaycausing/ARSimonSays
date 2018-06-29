@@ -6,17 +6,18 @@ using GoogleARCore;
 public abstract class Turn : MonoBehaviour {
 	
 	private Turn currentTurn;
-	private Round round;
+	//private Round round;
 	private List<GameObject> currentChoices;
-	int currentRound;
+	//int currentRound;
 	bool turnActive;
 
 	public abstract void EndTurn();
-	public abstract void StartTurn();
+	//public abstract void StartTurn();
 	public abstract void RestartTurn();
 
-	public abstract List<GameObject> SelectChoices();
-	public abstract void PlaybackChoices(List<GameObject> choices);
+	// FIXME: figure out what's causing the game to crash
+	//public abstract List<GameObject> SelectChoices();
+	//public abstract void PlaybackChoices(List<GameObject> choices);
 
 	public abstract List<GameObject> GetCurrentChoices();
 	// TODO:

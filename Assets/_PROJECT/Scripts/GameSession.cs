@@ -38,32 +38,37 @@ public class GameSession : MonoBehaviour {
 	private GameObject roundObj;
 
 	void Awake(){
-		RoundNum = 0;
-
-		playArea = GameManager.activePlane;
-		playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
-		
 		player = GameObject.FindWithTag("Player");
-		
-		SimonChoiceHistory = new List<GameObject>();
 
-		session = this;
+		this.enabled = false;
 	}
-
-	void Start(){
-		//float distance = 0f;
+	
+	void OnEnable(){
+		if(playArea == null){
+			playArea = GameManager.activePlane;
+			playAreaAnchor = Session.CreateAnchor(playArea.CenterPose, playArea);
+		}
+		RoundNum = 0;
+		SimonChoiceHistory = new List<GameObject>();
 		for(int i = 0; i < availableChoices.Length; i++){
 			Instantiate(availableChoices[i], spawnPositions[i], Quaternion.identity, playAreaAnchor.transform);
 			availableChoicesSpawned[i] = availableChoices[i];
 		}
+	}
+
+	void Start(){
 		Debug.Log("Game Session Start");
+
+		session = this;
+		roundObj = Instantiate((new GameObject("Round")), this.transform);
 		StartRound();
 	}
 
 
 	// used to create Round instances
 	public void StartRound() {
-		roundObj = Instantiate((new GameObject("Round " + RoundNum)), this.transform);
+		//round = gameObject.AddComponent<Round>() as Round;
+		
 		round = roundObj.AddComponent<Round>() as Round;
 		//Instantiate(new Round(), transform);
 		Debug.Log("Round " + RoundNum + " start");
@@ -75,7 +80,7 @@ public class GameSession : MonoBehaviour {
 		// and moving on to the next round
 		SimonChoiceHistory = simonChoices;
 		Destroy(round);
-		Destroy(roundObj);
+		//Destroy(roundObj);
 		RoundNum++;
 		StartRound();
 	}

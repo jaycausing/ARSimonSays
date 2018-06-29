@@ -8,23 +8,22 @@ public class SimonTurn : Turn
 
 	//TODO: on creation of new turn, reference list of available choices
 	private Turn currentTurn;
-	private Round round;
+	//private Round round;
 	private List<GameObject> currentChoices;
-	List<GameObject> pastChoices;
-	int currentRound;
+	//List<GameObject> pastChoices;
+	//int currentRound;
 	//bool turnActive;
 	
-    void Awake()
+    void OnEnable()
     {
-		pastChoices = GameSession.SimonChoiceHistory;
-		currentChoices = pastChoices;
-		currentRound = GameSession.RoundNum;
-		//turnActive = false;
+		//pastChoices = GameSession.SimonChoiceHistory;
+		currentChoices = GameSession.SimonChoiceHistory;;
+		//currentRound = GameSession.RoundNum;
 		currentTurn = this;
     }
 
 	void Start(){
-		StartTurn();
+		StartCoroutine(SelectChoices());
 	}
 
     public override void EndTurn()
@@ -34,33 +33,53 @@ public class SimonTurn : Turn
         //throw new System.NotImplementedException();
     }
 
-    public override void PlaybackChoices(List<GameObject> choices)
+    /*public override void PlaybackChoices(List<GameObject> choices)
     {
         //TODO: playback animation
 
-		Debug.Log("Simon has chosen...");
-		StartCoroutine(PrintChoicesInLog(choices));
+		
+		Debug.Log(currentChoices.ToString());
+		//StartCoroutine(PrintChoicesInLog(choices));
 		
 		EndTurn();
 		//turnActive = false;
-    }
+	}*/
 
 	// DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+		Debug.Log("Simon has chosen...");
 		foreach(GameObject choice in choices){
 			Debug.Log(choice.name);
 			yield return new WaitForSeconds(2);
 		}
+		EndTurn();
 	}
 
     public override void RestartTurn()
     {
 		//turnActive = true;
-		PlaybackChoices(currentChoices);
+		StartCoroutine(PrintChoicesInLog(currentChoices));
         throw new System.NotImplementedException();
     }
 
-    public override List<GameObject> SelectChoices()
+	// DELETE ME WHEN FIGURED OUT CAUSE OF CRASH
+	IEnumerator SelectChoices(){
+		Debug.Log("Choosing objects...");
+        if(GameSession.RoundNum == 0){
+			currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
+			yield return new WaitForSeconds(3);
+			currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
+			yield return new WaitForSeconds(3);
+			currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
+			yield return new WaitForSeconds(3);
+			yield return StartCoroutine(PrintChoicesInLog(currentChoices));
+		}
+		currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
+		yield return new WaitForSeconds(3);
+		yield return StartCoroutine(PrintChoicesInLog(currentChoices));
+	}
+
+    /*public override List<GameObject> SelectChoices()
     {
 		Debug.Log("Choosing objects...");
         if(currentRound == 0){
@@ -71,17 +90,17 @@ public class SimonTurn : Turn
 		}
 		currentChoices.Add(GameSession.availableChoicesSpawned[RandomChoice()]);
 		return currentChoices;
-    }
+	}*/
 
 	private int RandomChoice(){
 		int choice = Mathf.RoundToInt(Random.Range(0.0f, 4.0f));
 		return choice;
 	}
 
-    public override void StartTurn()
+    /*public override void StartTurn()
     {
-		PlaybackChoices(SelectChoices());
-    }
+		//PlaybackChoices(SelectChoices());
+    }*/
 
     public override List<GameObject> GetCurrentChoices()
     {
