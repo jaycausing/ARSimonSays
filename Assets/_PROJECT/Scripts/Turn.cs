@@ -13,7 +13,7 @@ public abstract class Turn : MonoBehaviour {
 
 	public abstract void EndTurn();
 	//public abstract void StartTurn();
-	public abstract void RestartTurn();
+	//public abstract IEnumerator RestartTurn();
 
 	// FIXME: figure out what's causing the game to crash
 	//public abstract List<GameObject> SelectChoices();

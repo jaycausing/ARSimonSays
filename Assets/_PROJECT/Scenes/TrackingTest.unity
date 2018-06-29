@@ -336,7 +336,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1168406905107402, guid: 4ce851bf26a47794d8854eed76280f12, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ce851bf26a47794d8854eed76280f12, type: 2}
@@ -439,7 +439,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1561116481857270, guid: 826d5828c1558804d82bd1aeee3a1634, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 826d5828c1558804d82bd1aeee3a1634, type: 2}
@@ -495,8 +495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6735921bf2b2246b7002b5305d04df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SessionPrefab: {fileID: 1168406905107402, guid: 4ce851bf26a47794d8854eed76280f12,
-    type: 2}
 --- !u!1 &1470167228
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,15 +64,20 @@ public class Round : MonoBehaviour {
 		IsPlayerCorrect(playerChoices);
 	}
 
-	private void RestartRound(){
+	private IEnumerator RestartRound(){
 		Debug.Log("Restarting round " + GameSession.RoundNum);
 		//Debug.Log("Restarting round " + RoundNum);
-		simonTurn.RestartTurn();
+		yield return StartCoroutine
+		(simonTurn.RestartTurn());
+		yield return new WaitForSeconds(5);
+		Debug.Log("Player's turn starting again");
+		playerTurn.RestartTurn();
 	}
 
-	private void IsPlayerCorrect(List<GameObject> playerChoices){
+	private IEnumerator IsPlayerCorrect(List<GameObject> playerChoices){
 		if(playerChoices.Equals(SimonChoiceHistory)){
 			Debug.Log("Correct! On to the next round!");
+			yield return new WaitForSeconds(5.0f);
 			gameObject.SendMessageUpwards("EndRound", SimonChoiceHistory);
 		} else {
 			//testing game ending first

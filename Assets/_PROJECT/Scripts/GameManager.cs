@@ -21,18 +21,18 @@ public class GameManager : MonoBehaviour {
     GameSession session;
     public static DetectedPlane activePlane;
     
-    void Awake(){
+    void Start(){
         session = GetComponentInChildren<GameSession>();
     }
 
     void Update() {
-        if(ActivePlaneGenerator.GetActivePlaneStatus() == true &&
-        !session.isActiveAndEnabled){
-        //ActiveSession == null){
-            activePlane = ActivePlaneGenerator.GetActivePlane();
-            session.enabled = true;
-            //SessionPrefab.SetActive(true);
-           //GameStart(ActivePlaneGenerator.GetActivePlane());
+        if(ActivePlaneGenerator.GetActivePlaneStatus()){
+            if(!session.isActiveAndEnabled){
+                activePlane = ActivePlaneGenerator.GetActivePlane();
+                session.enabled = true;
+                //SessionPrefab.SetActive(true);
+                //GameStart(ActivePlaneGenerator.GetActivePlane());
+            }
         }
     }
 
