@@ -20,7 +20,7 @@ public class GameSession : MonoBehaviour {
 	public static List<GameObject> availableChoicesSpawned;
 	private Vector3[] spawnPositions;
 
-	private GameObject player;
+	//private GameObject player;
 
 	//Simon's list
 	public static List<GameObject> SimonChoiceHistory;
@@ -34,7 +34,7 @@ public class GameSession : MonoBehaviour {
 	private bool isRestarting;
 
 	void Awake(){
-		player = GameObject.FindWithTag("Player");
+		//player = GameObject.FindWithTag("Player");
 		this.enabled = false;
 	}
 	
@@ -58,15 +58,12 @@ public class GameSession : MonoBehaviour {
 		RoundNum = 0;
 		SimonChoiceHistory = new List<GameObject>();
 		
-		Debug.Log("Game Session Start");
-
 		for(int i = 0; i < availableChoices.Length; i++){
 			GameObject choiceObj = Instantiate(availableChoices[i], spawnPositions[i], Quaternion.identity, playAreaAnchor.transform);
 			availableChoicesSpawned.Add(choiceObj);
 		}
 
 		session = this;
-		Debug.Log("Session set");
 		roundObj = Instantiate((new GameObject("Round")), this.transform);
 		StartRound();
 
@@ -104,14 +101,7 @@ public class GameSession : MonoBehaviour {
 
 	// used to create Round instances
 	public void StartRound() {
-		//round = gameObject.AddComponent<Round>() as Round;
-		
-
-
 		round = roundObj.AddComponent<Round>() as Round;
-		Debug.Log("Round begin");
-		//Instantiate(new Round(), transform);
-		Debug.Log("Round " + RoundNum + " start");
 	}
 	
 	// used to end Round instances before starting a new one

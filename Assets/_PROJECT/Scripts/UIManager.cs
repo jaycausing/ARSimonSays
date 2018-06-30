@@ -50,12 +50,9 @@ public class UIManager : MonoBehaviour {
     }
 
     /// Start Game Button ///
-
     public void StartTracking(){
 		Destroy(GameObject.Find("StartBtn"));
 		ActivePlaneGenerator.StartTracking = true;
-        Debug.Log("Is tracking active? " + ActivePlaneGenerator.StartTracking);
-        Debug.Log("Session status: " + Session.Status);
         SearchingUI.SetActive(true);
         GameManageUI.SetActive(true);
         RestartBtn.SetActive(true);

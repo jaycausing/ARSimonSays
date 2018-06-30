@@ -51,6 +51,7 @@ public class SimonTurn : Turn
 		foreach(GameObject choice in choices){
 			ColorChoiceText.text = choice.name;
 			yield return new WaitForSeconds(2);
+			ColorChoiceText.text = "";
 		}
 		yield return new WaitForSeconds(3);
 	}
@@ -84,7 +85,6 @@ public class SimonTurn : Turn
 
     public override List<GameObject> GetCurrentChoices()
     {
-		Debug.Log("App tried calling the wrong SelectChoices()");
         throw new System.NotImplementedException();
     }
 

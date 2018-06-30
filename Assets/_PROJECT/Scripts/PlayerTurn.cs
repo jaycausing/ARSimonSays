@@ -17,17 +17,21 @@ public class PlayerTurn : Turn
     private Turn currentTurn;
 	private List<GameObject> currentChoices;
 	
-	bool turnActive = false;
-
     Text EntityChoices;
 	Text ColorChoiceText;
     Text PlayerChoiceText;
 
+    Camera playerCam;
+
+    bool isTracking;
+
     void OnEnable() {
+        playerCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         EntityChoices = GameObject.Find("EntityChoices").GetComponent<Text>();
 		ColorChoiceText = GameObject.Find("EntityChoices").GetComponent<Text>();
 		PlayerChoiceText = GameObject.Find("PlayerChoiceText").GetComponent<Text>();
         currentChoices = new List<GameObject>();
+        isTracking = false;
 		currentTurn = this;
     }
 
@@ -42,25 +46,24 @@ public class PlayerTurn : Turn
 	}
 
     void Update(){
-        while(turnActive){
-            Camera playerCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
-            Touch touch;
-            RaycastHit hit;
+        RaycastHit hit;
 
-            if(Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-                return;
-            
-            touch = Input.GetTouch(0);
+        while(isTracking ){
+            foreach(Touch touch in Input.touches) {
+                if(touch.phase == TouchPhase.Began) {
+                    Ray ray = playerCam.ScreenPointToRay(touch.position);
 
-            Ray ray = playerCam.ScreenPointToRay(touch.position);
+                    int layerMask = 1 << 9;
 
-            if(Physics.Raycast(ray, out hit)){
-                
-                if (hit.collider != null){
-                    Debug.Log("Raycast hit: " + hit.transform.gameObject.name);
-                    Transform choiceObj = hit.transform.parent;
-                    currentChoices.Add(choiceObj.gameObject);
-                    Debug.Log("Selected: " + choiceObj.gameObject.name);
+                    if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
+                        if (hit.collider != null){
+                            if(hit.transform.parent != null) {
+                                Transform choiceObj = hit.transform.parent;
+                                currentChoices.Add(choiceObj.gameObject);
+                                Debug.Log("Choice added: " + choiceObj.name);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -81,10 +84,8 @@ public class PlayerTurn : Turn
 
     IEnumerator SelectChoices(){
         PlayerChoiceText.text = "Tap on a cube to select it";
-        turnActive = true;
-        //TODO: Touch object to select it
+        isTracking = true;
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
-        turnActive = false;
     }
 
 	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
@@ -93,6 +94,7 @@ public class PlayerTurn : Turn
 		foreach(GameObject choice in currentChoices){
 			ColorChoiceText.text = choice.name;
 			yield return new WaitForSeconds(3);
+            ColorChoiceText.text = "";
 		}
 	}
 

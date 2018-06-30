@@ -35,7 +35,6 @@ public class Round : MonoBehaviour {
 	}
 
 	void StartSimonTurn(){
-		// TODO: deactivate choices from player input
 		GameObject.Find("CurrentTurnText").GetComponent<Text>().text =
 		defautTurnText + "Simon";
 		
@@ -45,8 +44,6 @@ public class Round : MonoBehaviour {
 	}
 	void EndSimonTurn(List<GameObject> simonsChoices){
 		SimonChoiceHistory = simonsChoices;
-		Debug.Log("Simon's turn end");
-		// TODO: activate choices from player input
 		StartPlayerTurn();
 	}
 	void StartPlayerTurn(){
@@ -56,15 +53,12 @@ public class Round : MonoBehaviour {
 		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "You";
 	}
 	public void EndPlayerTurn(List<GameObject> playerChoices){
-		Debug.Log("Player's turn end");
 		IsPlayerCorrect(playerChoices);
 	}
 
 	private IEnumerator RestartRound(){
 		Debug.Log("Restarting round " + GameSession.RoundNum);
-		//Debug.Log("Restarting round " + RoundNum);
-		yield return StartCoroutine
-		(simonTurn.RestartTurn());
+		yield return StartCoroutine		(simonTurn.RestartTurn());
 		yield return new WaitForSeconds(5);
 		Debug.Log("Player's turn starting again");
 		playerTurn.RestartTurn();
