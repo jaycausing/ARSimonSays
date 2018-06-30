@@ -19,8 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4585655625460178}
-  - component: {fileID: 114347294302343610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GreenChoice
   m_TagString: Choice
   m_Icon: {fileID: 0}
@@ -38,8 +37,8 @@ GameObject:
   - component: {fileID: 33926449470031322}
   - component: {fileID: 23682249179982800}
   - component: {fileID: 65582696179036240}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 9
+  m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,14 +125,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114347294302343610
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1861257696329202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1eacd32f3b152a44aad65b67cf5312e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
