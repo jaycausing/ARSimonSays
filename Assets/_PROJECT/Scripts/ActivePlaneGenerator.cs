@@ -11,7 +11,6 @@ public class ActivePlaneGenerator : MonoBehaviour {
 	private static bool isPlaneActive;
 	private static List<DetectedPlane> l_NewPlanes = new List<DetectedPlane>();
 
-	[SerializeField]
 	public static bool StartTracking = false;
 
 	void Awake() {

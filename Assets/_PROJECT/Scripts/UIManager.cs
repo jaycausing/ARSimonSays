@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour {
     private GameObject CurrentTurnText;
 
     Text scoreText;
+    string defaultScoreText;
 
     private GameManager GameManagerObj;
 
@@ -35,6 +36,7 @@ public class UIManager : MonoBehaviour {
         CurrentTurnText = GameObject.Find("CurrentTurnText");
 
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
+        defaultScoreText = scoreText.text;
 
         GameManagerObj = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
@@ -52,15 +54,16 @@ public class UIManager : MonoBehaviour {
     /// Start Game Button ///
     public void StartTracking(){
 		Destroy(GameObject.Find("StartBtn"));
-		ActivePlaneGenerator.StartTracking = true;
         SearchingUI.SetActive(true);
         GameManageUI.SetActive(true);
         RestartBtn.SetActive(true);
         CurrentTurnText.SetActive(true);
+        ActivePlaneGenerator.StartTracking = true;
 	}
 
     public void ShowGameStartMessage(){
         GameStartUI.SetActive(true);
+        CurrentTurnText.SetActive(true);
         StartCoroutine(DeactivateUIAfterWait(GameStartUI));
     }
 
@@ -78,7 +81,16 @@ public class UIManager : MonoBehaviour {
 
     public void GameRestart(){
         RestartConfirmPopup.SetActive(false);
-        StartCoroutine(RestartingGame());
+        if(GameManagerObj.GetGameStatus()){
+            if(GameOverMessage != null){
+                GameOverMessage.SetActive(false);
+                scoreText.text = defaultScoreText;
+            }
+            GameManagerObj.GameStart();
+            RestartBtn.SetActive(true);
+        } else {
+            StartCoroutine(RestartingGame());
+        }
     }
 
     public IEnumerator RestartingGame(){
