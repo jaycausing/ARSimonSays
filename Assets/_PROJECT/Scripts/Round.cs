@@ -53,12 +53,12 @@ public class Round : MonoBehaviour {
 		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText + "You";
 	}
 	public void EndPlayerTurn(List<GameObject> playerChoices){
-		IsPlayerCorrect(playerChoices);
+		StartCoroutine(IsPlayerCorrect(playerChoices));
 	}
 
 	private IEnumerator RestartRound(){
 		Debug.Log("Restarting round " + GameSession.RoundNum);
-		yield return StartCoroutine		(simonTurn.RestartTurn());
+		yield return StartCoroutine	(simonTurn.RestartTurn());
 		yield return new WaitForSeconds(5);
 		Debug.Log("Player's turn starting again");
 		playerTurn.RestartTurn();
@@ -71,6 +71,7 @@ public class Round : MonoBehaviour {
 			gameObject.SendMessageUpwards("EndRound", SimonChoiceHistory);
 		} else {
 			//testing game ending first
+			Debug.Log("Nope. Game over");
 			gameObject.SendMessageUpwards("GameOver");
 			//RestartRound();
 		}
