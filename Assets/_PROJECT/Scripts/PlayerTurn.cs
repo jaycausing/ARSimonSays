@@ -48,11 +48,12 @@ public class PlayerTurn : Turn
 
     void Update(){
         if(isTracking && Input.touchCount > 0){
-            StartCoroutine(CheckTouch(Input.touches));
+            //StartCoroutine(CheckTouch(Input.touches));
+            CheckTouch(Input.touches);
         }
     }
 
-    private IEnumerator CheckTouch(Touch[] touches){
+    private void CheckTouch(Touch[] touches){
         RaycastHit hit;
         foreach(Touch touch in touches) {
             if(touch.phase == TouchPhase.Began) {
@@ -64,7 +65,7 @@ public class PlayerTurn : Turn
                             Transform choiceObj = hit.transform.parent;
                             currentChoices.Add(choiceObj.gameObject);
                             Debug.Log("Choice added: " + choiceObj.name);
-                            yield return new WaitForSeconds(0.1f);
+                            //yield return new WaitForSeconds(0.1f);
                         }
                     }
                 }
@@ -89,7 +90,7 @@ public class PlayerTurn : Turn
     IEnumerator SelectChoices(){
         PlayerChoiceText.text = "Tap on a cube to select it";
         isTracking = true;
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
     }
 

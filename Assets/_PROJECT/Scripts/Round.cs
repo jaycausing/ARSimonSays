@@ -21,7 +21,8 @@ public class Round : MonoBehaviour {
 	}
 
 	void OnDisable(){
-		GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText;
+		if(GameObject.Find("CurrentTurnText") != null)
+			GameObject.Find("CurrentTurnText").GetComponent<Text>().text = defautTurnText;
 		Destroy(currentRound);
 	}
 
@@ -65,7 +66,13 @@ public class Round : MonoBehaviour {
 	}
 
 	private IEnumerator IsPlayerCorrect(List<GameObject> playerChoices){
-		if(playerChoices.Equals(SimonChoiceHistory)){
+		bool correct = true;
+		for(int i = 0; i < playerChoices.Count; i++){
+			if(!playerChoices[i].Equals(SimonChoiceHistory[i]))
+				correct = false;
+		}
+
+		if(correct){
 			Debug.Log("Correct! On to the next round!");
 			yield return new WaitForSeconds(5.0f);
 			gameObject.SendMessageUpwards("EndRound", SimonChoiceHistory);
