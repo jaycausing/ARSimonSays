@@ -9,16 +9,18 @@ public class GameManager : MonoBehaviour {
     private GameSession session;
     public static DetectedPlane activePlane;
     private UIManager UIManagerObj;
+    private bool isGameEnd;
     
     
     void Start(){
         session = GetComponentInChildren<GameSession>();
         UIManagerObj = GameObject.Find("UIManager").GetComponent<UIManager>();
+        isGameEnd = false;
     }
 
     void Update() {
         if(ActivePlaneGenerator.GetActivePlaneStatus()){
-            if(!session.isActiveAndEnabled){
+            if(!session.isActiveAndEnabled && !isGameEnd){
                 activePlane = ActivePlaneGenerator.GetActivePlane();
                 GameStart();
             }
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameOver(){
+        isGameEnd = true;
         UIManagerObj.ShowGameOverMessage(GameSession.RoundNum);
         StartCoroutine(GameEnd());
     }

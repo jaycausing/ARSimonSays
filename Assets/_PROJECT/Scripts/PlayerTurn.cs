@@ -73,6 +73,7 @@ public class PlayerTurn : Turn
     }
 
     public override void EndTurn() {
+        Debug.Log("Player turn ending");
         EntityChoices.text = "";
 		ColorChoiceText.text = "";
         PlayerChoiceText.text = "";
