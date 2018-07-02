@@ -16,6 +16,7 @@ public class PlayerTurn : Turn
 	//private Round round;
     private Turn currentTurn;
 	private List<GameObject> currentChoices;
+    private static int layerMask = 1 << 9;
 	
     Text EntityChoices;
 	Text ColorChoiceText;
@@ -46,22 +47,24 @@ public class PlayerTurn : Turn
 	}
 
     void Update(){
+        if(isTracking && Input.touchCount > 0){
+            StartCoroutine(CheckTouch(Input.touches));
+        }
+    }
+
+    private IEnumerator CheckTouch(Touch[] touches){
         RaycastHit hit;
+        foreach(Touch touch in touches) {
+            if(touch.phase == TouchPhase.Began) {
+                Ray ray = playerCam.ScreenPointToRay(touch.position);
 
-        while(isTracking ){
-            foreach(Touch touch in Input.touches) {
-                if(touch.phase == TouchPhase.Began) {
-                    Ray ray = playerCam.ScreenPointToRay(touch.position);
-
-                    int layerMask = 1 << 9;
-
-                    if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
-                        if (hit.collider != null){
-                            if(hit.transform.parent != null) {
-                                Transform choiceObj = hit.transform.parent;
-                                currentChoices.Add(choiceObj.gameObject);
-                                Debug.Log("Choice added: " + choiceObj.name);
-                            }
+                if(Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
+                    if (hit.collider != null){
+                        if(hit.transform.parent != null) {
+                            Transform choiceObj = hit.transform.parent;
+                            currentChoices.Add(choiceObj.gameObject);
+                            Debug.Log("Choice added: " + choiceObj.name);
+                            yield return new WaitForSeconds(0.1f);
                         }
                     }
                 }
@@ -85,6 +88,7 @@ public class PlayerTurn : Turn
     IEnumerator SelectChoices(){
         PlayerChoiceText.text = "Tap on a cube to select it";
         isTracking = true;
+        yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
     }
 
@@ -97,6 +101,10 @@ public class PlayerTurn : Turn
             ColorChoiceText.text = "";
 		}
 	}
+
+    /*private IEnumerator WaitBuffer(float time){
+        yield return new WaitForSeconds(time);
+    }*/
 
     public void RestartTurn()
     {

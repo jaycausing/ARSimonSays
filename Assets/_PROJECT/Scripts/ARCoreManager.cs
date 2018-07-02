@@ -52,14 +52,5 @@ public class ARCoreManager : MonoBehaviour {
 		}
 	}
 
-	/*public void StartGameOnClick(){
-		setSceneUI(false);
-		setGameUI(true);
-	}*/
-
-	//public void setSceneUI(bool setScene) { SceneUI.SetActive(setScene); }
-	//public void setGameUI(bool setGame) { GameUI.SetActive(setGame); }
-
-
 
 }
