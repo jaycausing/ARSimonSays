@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4118352498608906}
   m_Layer: 9
-  m_Name: MagentaChoice
+  m_Name: Magenta
   m_TagString: Choice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

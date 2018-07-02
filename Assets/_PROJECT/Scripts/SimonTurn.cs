@@ -33,7 +33,7 @@ public class SimonTurn : Turn
 
 	private IEnumerator StartTurn(){
 		yield return StartCoroutine(SelectChoices());
-		yield return StartCoroutine(PrintChoicesInLog(currentChoices));
+		yield return StartCoroutine(PrintChoices(currentChoices));
 		EndTurn();
 	}
 
@@ -44,21 +44,21 @@ public class SimonTurn : Turn
     }
 
 
-	// DELETE ME WHEN YOU CREATE PLAYBACK ANIMS!!!
-	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+	private IEnumerator PrintChoices(List<GameObject> choices){
 		EntityChoices.text = "Simon's choices are...";
 		yield return new WaitForSeconds(3);
 		foreach(GameObject choice in choices){
 			ColorChoiceText.text = choice.name;
 			yield return new WaitForSeconds(2);
 			ColorChoiceText.text = "";
+			yield return new WaitForSeconds(0.1f);
 		}
 		yield return new WaitForSeconds(3);
 	}
 
     public IEnumerator RestartTurn()
     {
-		yield return StartCoroutine(PrintChoicesInLog(currentChoices));
+		yield return StartCoroutine(PrintChoices(currentChoices));
 		EndTurn();
     }
 

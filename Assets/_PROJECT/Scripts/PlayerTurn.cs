@@ -48,7 +48,6 @@ public class PlayerTurn : Turn
 
     void Update(){
         if(isTracking && Input.touchCount > 0){
-            //StartCoroutine(CheckTouch(Input.touches));
             CheckTouch(Input.touches);
         }
     }
@@ -64,8 +63,7 @@ public class PlayerTurn : Turn
                         if(hit.transform.parent != null) {
                             Transform choiceObj = hit.transform.parent;
                             currentChoices.Add(choiceObj.gameObject);
-                            Debug.Log("Choice added: " + choiceObj.name);
-                            //yield return new WaitForSeconds(0.1f);
+                            ColorChoiceText.text = choiceObj.name;
                         }
                     }
                 }
@@ -83,25 +81,29 @@ public class PlayerTurn : Turn
 
     private IEnumerator StartTurn(){
 		yield return StartCoroutine(SelectChoices());
-		yield return StartCoroutine(PrintChoicesInLog(currentChoices));
+		yield return StartCoroutine(PrintChoices(currentChoices));
 		EndTurn();
 	}
 
     IEnumerator SelectChoices(){
         PlayerChoiceText.text = "Tap on a cube to select it";
         isTracking = true;
-        //yield return new WaitForSeconds(0.1f);
         yield return new WaitUntil(() => currentChoices.Count == Round.SimonChoiceHistory.Count);
+        isTracking = false;
+        ColorChoiceText.text = "";
+        PlayerChoiceText.text = "";
     }
 
-	private IEnumerator PrintChoicesInLog(List<GameObject> choices){
+	private IEnumerator PrintChoices(List<GameObject> choices){
 		EntityChoices.text = "You have chosen...";
         yield return new WaitForSeconds(3);
 		foreach(GameObject choice in currentChoices){
 			ColorChoiceText.text = choice.name;
-			yield return new WaitForSeconds(3);
+			yield return new WaitForSeconds(2);
             ColorChoiceText.text = "";
+            yield return new WaitForSeconds(0.1f);
 		}
+        yield return new WaitForSeconds(3);
 	}
 
     /*private IEnumerator WaitBuffer(float time){

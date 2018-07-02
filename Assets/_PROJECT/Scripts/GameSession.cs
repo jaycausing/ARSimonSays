@@ -60,6 +60,7 @@ public class GameSession : MonoBehaviour {
 		
 		for(int i = 0; i < availableChoices.Length; i++){
 			GameObject choiceObj = Instantiate(availableChoices[i], spawnPositions[i], Quaternion.identity, playAreaAnchor.transform);
+			choiceObj.name = availableChoices[i].name;
 			availableChoicesSpawned.Add(choiceObj);
 		}
 
@@ -106,11 +107,8 @@ public class GameSession : MonoBehaviour {
 	
 	// used to end Round instances before starting a new one
 	public void EndRound(List<GameObject> simonChoices){
-		// TODO: UI or anim event showing player is correct
-		// and moving on to the next round
 		SimonChoiceHistory = simonChoices;
 		Destroy(round);
-		//Destroy(roundObj);
 		RoundNum++;
 		StartRound();
 	}

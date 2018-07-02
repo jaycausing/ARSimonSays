@@ -73,14 +73,13 @@ public class Round : MonoBehaviour {
 		}
 
 		if(correct){
-			Debug.Log("Correct! On to the next round!");
+			Text EntityChoices = GameObject.Find("EntityChoices").GetComponent<Text>();
+			EntityChoices.text = "Correct! On to the next round!";
 			yield return new WaitForSeconds(5.0f);
+			EntityChoices.text = "";
 			gameObject.SendMessageUpwards("EndRound", SimonChoiceHistory);
 		} else {
-			//testing game ending first
-			Debug.Log("Nope. Game over");
 			gameObject.SendMessageUpwards("GameOver");
-			//RestartRound();
 		}
 	}
 
